@@ -17,6 +17,6 @@ public sealed class HealEffect : EffectBase
             targetUnit.Stats.Heal(healAmount);
             EffectView.ShowHealEffect(casterUnit, targetUnit, healAmount);
         }
-        ApplyTurnChange(skillExecutionContext.TurnManager);
+        ApplyNeutralTurnChange(skillExecutionContext.TurnManager);
     }
 }

@@ -22,7 +22,7 @@ public sealed class ReviveEffect : EffectBase
             EffectView.ShowReviveEffect(casterUnit, targetUnit, healAmount);
         }
 
-        ApplyTurnChange(skillExecutionContext.TurnManager);
+        ApplyNeutralTurnChange(skillExecutionContext.TurnManager);
     }
 
     private static bool IsTargetAlive(UnitBase targetUnit)

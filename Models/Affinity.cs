@@ -10,27 +10,26 @@ public class Affinity
     }
 
     public string GetAffinityReaction(AffinityElement element)
+    {
+        string key = element switch
         {
-            string key = element switch
-            {
-                AffinityElement.Physical => "Phys",
-                AffinityElement.Gun => "Gun",
-                AffinityElement.Fire => "Fire",
-                AffinityElement.Ice => "Ice",
-                AffinityElement.Elec => "Elec",
-                AffinityElement.Force => "Force",
-                AffinityElement.Light => "Light",
-                AffinityElement.Dark => "Dark",
-                AffinityElement.Bind => "Bind",
-                AffinityElement.Sleep => "Sleep",
-                AffinityElement.Sick => "Sick",
-                AffinityElement.Panic => "Panic",
-                AffinityElement.Poison => "Poison",
-                _ => "-"
-            };
+            AffinityElement.Physical => "Phys",
+            AffinityElement.Gun => "Gun",
+            AffinityElement.Fire => "Fire",
+            AffinityElement.Ice => "Ice",
+            AffinityElement.Elec => "Elec",
+            AffinityElement.Force => "Force",
+            AffinityElement.Light => "Light",
+            AffinityElement.Dark => "Dark",
+            AffinityElement.Almighty => "Almighty",
+            AffinityElement.Heal => "Heal",
+            AffinityElement.Special => "Special",
+            _ => "-"
+        };
+        
+        return key == "Almighty" ? "-" : _affinities.GetValueOrDefault(key, "-");
+    }
 
-            return _affinities.GetValueOrDefault(key, "-");
-        }
 
     public override string ToString()
     {

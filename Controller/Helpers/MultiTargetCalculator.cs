@@ -1,6 +1,7 @@
 ﻿namespace Shin_Megami_Tensei;
 public static class MultiTargetCalculator
-{ public static List<UnitBase> CalculateMultiTargetSequence(
+{
+    public static List<UnitBase> CalculateTargets(
         List<UnitBase> aliveEnemies,
         int playerSkillUseCount,
         int totalHits)
@@ -8,22 +9,26 @@ public static class MultiTargetCalculator
         if (aliveEnemies.Count == 0)
             return [];
 
-        int totalActiveEnemies = aliveEnemies.Count;
-        int startingIndex = playerSkillUseCount % totalActiveEnemies;
-        bool shouldMoveRight = startingIndex % 2 == 0;
+        int totalAlive = aliveEnemies.Count;
+        int startIndex = playerSkillUseCount % totalAlive;
+        bool moveRight = startIndex % 2 == 0;
 
         List<UnitBase> orderedTargets = [];
-        int currentIndex = startingIndex;
+        int currentIndex = startIndex;
 
-        for (int hitIndex = 0; hitIndex < totalHits; hitIndex++)
+        for (int hit = 0; hit < totalHits; hit++)
         {
             orderedTargets.Add(aliveEnemies[currentIndex]);
-
-            currentIndex = shouldMoveRight
-                ? (currentIndex + 1) % totalActiveEnemies          // Avanza derecha (rotación circular)
-                : (currentIndex - 1 + totalActiveEnemies) % totalActiveEnemies; // Avanza izquierda
+            currentIndex = GetNextIndex(currentIndex, totalAlive, moveRight);
         }
 
         return orderedTargets;
+    }
+
+    private static int GetNextIndex(int currentIndex, int total, bool moveRight)
+    {
+        return moveRight
+            ? (currentIndex + 1) % total
+            : (currentIndex - 1 + total) % total;
     }
 }

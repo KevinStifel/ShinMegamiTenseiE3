@@ -27,34 +27,39 @@ public sealed class DamageEffect : EffectBase
         _elementType = AffinityMapper.Parse(_skillData.Type);
 
         UnitBase? previousTarget = null;
+        string topPriorityAffinityReaction = AffinityPriorityHelper.GetTopPriorityReaction(targetEnemyUnits, _elementType);
 
         foreach (var (targetEnemyUnit, index) in targetEnemyUnits.Select((unit, index) => (unit, index)))
         {
-            ApplyDamageToTarget(casterUnit, targetEnemyUnit);
 
             if (HasTargetChanged(previousTarget, targetEnemyUnit))
                 ShowHp(casterUnit, previousTarget!);
+            
+            ApplyDamageToTarget(casterUnit, targetEnemyUnit);
 
             bool isLastHit = index == targetEnemyUnits.Count - 1;
             if (isLastHit)
                 ShowHp(casterUnit, targetEnemyUnit);
 
             previousTarget = targetEnemyUnit;
+            
         }
 
+        var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityAffinityReaction);
+        ApplyTurnChange(topAffinityBehavior);
+        
         var lastTarget = targetEnemyUnits.Last();
-        ApplyTurnChange(lastTarget);
         HandleDeaths(casterUnit, lastTarget);
     }
 
-    private void ApplyDamageToTarget(UnitBase casterUnit, UnitBase target)
+    private void ApplyDamageToTarget(UnitBase casterUnit, UnitBase targetUnit)
     {
-        var affinityBehavior = GetAffinityBehavior(target);
+        var affinityBehavior = GetAffinityBehavior(targetUnit, _elementType);
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
-
         int inflictedDamage = DamageCalculator.CalculateFinalDamageForSkill(casterUnit, _skillData, affinityBehavior);
-        affinityBehavior.ApplyEffect(casterUnit, target, inflictedDamage);
-        affinityView.ShowAffinityReaction(casterUnit, target, inflictedDamage);
+        
+        affinityBehavior.ApplyEffect(casterUnit, targetUnit, inflictedDamage);
+        affinityView.ShowAffinityReaction(casterUnit, targetUnit, inflictedDamage);
     }
 
     private static bool HasTargetChanged(UnitBase? previousTarget, UnitBase currentTarget)
@@ -64,18 +69,17 @@ public sealed class DamageEffect : EffectBase
 
     private void ShowHp(UnitBase casterUnit, UnitBase target)
     {
-        var affinityBehavior = GetAffinityBehavior(target);
+        var affinityBehavior = GetAffinityBehavior(target, _elementType);
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
         affinityView.ShowHp(casterUnit, target);
     }
 
-    private void ApplyTurnChange(UnitBase lastTarget)
+    private void ApplyTurnChange(AffinityBehavior affinityBehavior)
     {
-        var affinityBehavior = GetAffinityBehavior(lastTarget);
         var turnChange = _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
-
+    
     private void HandleDeaths(UnitBase casterUnit, UnitBase lastTarget)
     {
         HandleDeath(_boardManager, _enemyPlayerId, lastTarget);
@@ -86,11 +90,5 @@ public sealed class DamageEffect : EffectBase
     {
         if (unit.Stats.HP == 0)
             boardManager.HandleUnitDeath(playerId, unit);
-    }
-
-    private AffinityBehavior GetAffinityBehavior(UnitBase target)
-    {
-        var affinityReaction = target.Affinity.GetAffinityReaction(_elementType);
-        return AffinityBehaviorFactory.Create(affinityReaction);
     }
 }

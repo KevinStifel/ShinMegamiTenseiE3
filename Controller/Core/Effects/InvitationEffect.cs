@@ -27,7 +27,7 @@ public sealed class InvitationEffect : EffectBase
         HandleSummonResult(casterUnit, monsterToSummon);
 
         turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
-        ApplyTurnChange(turnManager);
+        ApplyNeutralTurnChange(turnManager);
     }
     private static void PlaceMonsterOnBoard(
         Dictionary<string, UnitBase?> playerBoard,

@@ -29,6 +29,6 @@ public sealed class SpecialEffect : EffectBase
         summonEffect.ApplySamuraiSummon(monsterToSummon, formation, placement);
         turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
 
-        ApplyTurnChange(turnManager);
+        ApplyNeutralTurnChange(turnManager);
     }
 }

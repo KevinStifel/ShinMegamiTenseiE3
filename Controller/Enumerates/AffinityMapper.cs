@@ -12,13 +12,9 @@ public static class AffinityMapper
         { "Force", AffinityElement.Force },
         { "Light", AffinityElement.Light },
         { "Dark", AffinityElement.Dark },
-        { "Bind", AffinityElement.Bind },
-        { "Sleep", AffinityElement.Sleep },
-        { "Sick", AffinityElement.Sick },
-        { "Panic", AffinityElement.Panic },
-        { "Poison", AffinityElement.Poison },
         { "Heal", AffinityElement.Heal },
         { "Special", AffinityElement.Special },
+        { "Almighty", AffinityElement.Almighty },
         
     };
 

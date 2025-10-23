@@ -17,7 +17,7 @@ public sealed class MultiEnemySelector : TargetSelectorBase
         int playerSkillUseCount = Board.GetSkillUseCount(currentPlayerId);
         int totalHits = HitCalculator.CalculateHits(skillData.Hits, playerSkillUseCount);
 
-        List<UnitBase> selectedTargets = MultiTargetCalculator.CalculateMultiTargetSequence(
+        List<UnitBase> selectedTargets = MultiTargetCalculator.CalculateTargets(
             aliveEnemies,
             playerSkillUseCount,
             totalHits

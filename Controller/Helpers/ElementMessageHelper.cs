@@ -14,7 +14,8 @@ public static class ElementMessageHelper
             AffinityElement.Force => "lanza viento",
             AffinityElement.Light => "ataca con luz",
             AffinityElement.Dark => "ataca con oscuridad",
-            _ => "usa una habilidad"
+            AffinityElement.Almighty => "lanza un ataque todo poderoso",
+            _ => ""
         };
     }
 }

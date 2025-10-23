@@ -17,10 +17,16 @@ public abstract class EffectBase
     }
 
     public abstract void ApplyEffect(UnitBase casterUnit, List<UnitBase> targets, SkillExecutionContext skillExecutionContext);
-    protected void ApplyTurnChange(TurnManager turnManager)
+    protected void ApplyNeutralTurnChange(TurnManager turnManager)
     {
         var turnChange = turnManager.ConsumeNeutralTurn();
         ActionView.ShowTurnConsumption(turnChange);
+    }
+
+    protected AffinityBehavior GetAffinityBehavior(UnitBase unit, AffinityElement elementType)
+    {
+        var affinityReaction = unit.Affinity.GetAffinityReaction(elementType);
+        return AffinityBehaviorFactory.Create(affinityReaction);
     }
     
 }

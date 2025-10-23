@@ -36,7 +36,9 @@ public static class DamageCalculator
             AffinityElement.Fire or
             AffinityElement.Ice or
             AffinityElement.Elec or
-            AffinityElement.Force => CalculateSquareRootDamage(attacker.Stats.Mag, skillData.Power),
+            AffinityElement.Force or 
+            AffinityElement.Almighty => CalculateSquareRootDamage(attacker.Stats.Mag, skillData.Power),
+
             _ => CalculateSquareRootDamage(attacker.Stats.Str, skillData.Power)
         };
     }

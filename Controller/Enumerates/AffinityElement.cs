@@ -10,11 +10,7 @@ public enum AffinityElement
     Force,
     Light,
     Dark,
-    Bind,
-    Sleep,
-    Sick,
-    Panic,
-    Poison,
+    Almighty,
     Heal,
     Special
 }
