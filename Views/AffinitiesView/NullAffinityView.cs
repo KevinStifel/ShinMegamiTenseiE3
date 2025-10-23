@@ -1,0 +1,14 @@
+﻿using Shin_Megami_Tensei;
+
+namespace Shin_Megami_Tensei_View;
+
+public sealed class NullAffinityView : AffinityViewBase
+{
+    public NullAffinityView(View view, AffinityElement element) : base(view, element) { }
+
+    public override void ShowAffinityReaction(UnitBase casterUnit, UnitBase targetUnit, int damage)
+    {
+        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+        View.WriteLine($"{targetUnit.Name} bloquea el ataque de {casterUnit.Name}");
+    }
+}
