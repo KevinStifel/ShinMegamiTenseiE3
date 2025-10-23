@@ -36,20 +36,18 @@ public sealed class DamageEffect : EffectBase
                 ShowHp(casterUnit, previousTarget!);
             
             ApplyDamageToTarget(casterUnit, targetEnemyUnit);
+            HandleDeaths(casterUnit, targetEnemyUnit);
+
 
             bool isLastHit = index == targetEnemyUnits.Count - 1;
             if (isLastHit)
                 ShowHp(casterUnit, targetEnemyUnit);
 
             previousTarget = targetEnemyUnit;
-            
         }
 
         var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityAffinityReaction);
         ApplyTurnChange(topAffinityBehavior);
-        
-        var lastTarget = targetEnemyUnits.Last();
-        HandleDeaths(casterUnit, lastTarget);
     }
 
     private void ApplyDamageToTarget(UnitBase casterUnit, UnitBase targetUnit)
