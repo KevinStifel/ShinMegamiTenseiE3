@@ -4,6 +4,8 @@ public sealed class RepelAffinityBehavior : AffinityBehavior
 {
     public override AffinityType Type => AffinityType.Repel;
 
+    public override bool ShouldShowHpAfterAttack() => false;
+
     public override double ModifyDamage(double baseDamage) => baseDamage;
     
     public override void ApplyEffect(UnitBase casterUnit, UnitBase targetUnit, int damage)

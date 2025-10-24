@@ -26,8 +26,8 @@ public class Skill
             throw new ActionCanceledException();
 
         boardManager.RegisterPlayerSkillCounter(currentPlayerId);
-        boardManager.IncrementSkillUseCount(currentPlayerId);
 
         _effect.ApplyEffect(casterUnit, targets, skillExecutionContext);
+        boardManager.IncrementSkillUseCount(currentPlayerId);
     }
 }
