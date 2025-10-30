@@ -14,6 +14,8 @@ public sealed class MassReviveHealEffect : EffectBase
     {
         var turnManager = skillExecutionContext.TurnManager;
         var skillData = skillExecutionContext.SkillData;
+        var boardManager = skillExecutionContext.BoardManager;
+        int currentPlayerId = skillExecutionContext.CurrentPlayerId;
 
         foreach (var targetUnit in targets)
         {
@@ -34,7 +36,11 @@ public sealed class MassReviveHealEffect : EffectBase
         casterUnit.Stats.TakeDamage(casterUnit.Stats.MaxHP);
         EffectView.ShowHpStatus(casterUnit);
 
+        boardManager.HandleUnitDeath(currentPlayerId, casterUnit);
+        
         ApplyNeutralTurnChange(turnManager);
+        
+        turnManager.SyncWithBoard(boardManager, currentPlayerId);
     }
 
     private static bool IsDead(UnitBase unit) => unit.Stats.HP <= 0;
@@ -44,5 +50,4 @@ public sealed class MassReviveHealEffect : EffectBase
         unit.Stats.TakeDamage(unit.Stats.HP);
         unit.Stats.Heal(healAmount);
     }
-
 }

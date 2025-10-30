@@ -13,18 +13,22 @@ public sealed class MassReviveAllySelector : TargetSelectorBase
 
     public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
-        var aliveAllies = Board.GetAliveUnits(currentPlayerId)
+        var aliveOnBoard = Board.GetAliveUnits(currentPlayerId)
             .Where(u => u != activeUnit)
+            .ToList();
+
+        var aliveInReserve = Board.GetReserveUnitsForPlayer(currentPlayerId)
+            .Where(u => u.Stats.HP > 0)
             .ToList();
 
         var deadAllies = Board.GetAllDeadUnits(currentPlayerId);
 
         var allAllies = new List<UnitBase>();
-        allAllies.AddRange(aliveAllies);
+        allAllies.AddRange(aliveOnBoard);
         allAllies.AddRange(deadAllies);
+        allAllies.AddRange(aliveInReserve);
 
         SelectorView.ShowSeparator();
-
         return allAllies;
     }
 }

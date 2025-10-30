@@ -106,4 +106,13 @@ public class TurnManager
         ApplyTurnChange(change);
         return change;
     }
+    public void SyncWithBoard(BoardManager boardManager, int playerId)
+    {
+        var aliveUnits = boardManager.GetAliveUnits(playerId);
+
+        _currentTurn.AttackOrder = _currentTurn.AttackOrder
+            .Where(u => aliveUnits.Contains(u))
+            .ToList();
+    }
+
 }
