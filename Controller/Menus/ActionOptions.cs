@@ -4,11 +4,11 @@
     {
         public IReadOnlyDictionary<string, string> Map { get; }
 
-        public ActionOptions(IReadOnlyDictionary<string, string> map)
+        public ActionOptions(IReadOnlyDictionary<string, string> actionMap)
         {
-            Map = map;
+            Map = actionMap;
         }
 
-        public string GetSelectedOption(string menuSelection) => Map[menuSelection];
+        public string GetSelectedOption(string menuSelection) => Map[menuSelection.Trim()];
     }
 }

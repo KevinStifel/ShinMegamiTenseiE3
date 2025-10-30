@@ -39,7 +39,9 @@ public sealed class UseSkillAction : CombatActionBase
             ? samurai.Skills
             : ((Monster)attackerUnit).Skills;
 
-        return allSkills.Where(skill => skill.Cost <= attackerUnit.Stats.MP).ToList();
+        return allSkills
+            .Where(skill => IsUsableSkill(attackerUnit, skill))
+            .ToList();
     }
 
     private static void ValidateManaAvailability(UnitBase attackerUnit, SkillData selectedSkillData)
@@ -56,5 +58,12 @@ public sealed class UseSkillAction : CombatActionBase
     private static void ConsumeMana(UnitBase attackerUnit, SkillData selectedSkillData)
     {
         UnitStatsManager.ConsumeMP(attackerUnit, selectedSkillData.Cost);
+    }
+    
+    private static bool IsUsableSkill(UnitBase attackerUnit, SkillData skill)
+    {
+        bool hasEnoughMP = skill.Cost <= attackerUnit.Stats.MP;
+        bool isActive = !string.Equals(skill.Type, "Passive", StringComparison.OrdinalIgnoreCase);
+        return hasEnoughMP && isActive;
     }
 }

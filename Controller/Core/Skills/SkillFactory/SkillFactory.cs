@@ -109,7 +109,7 @@ public static class SkillFactory
         if (skillName == "Blast Arrow")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
 
-        if (skillName == "Heaven’s Bow")
+        if (skillName == "Heaven's Bow")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
 
@@ -380,7 +380,7 @@ public static class SkillFactory
             return new Skill(skillData, new HealEffect(view), new AllySelector(view, boardManager));
 
         // --- Party (Multiobjetivo Heal) ---
-        /*
+        
         if (skillName == "Media")
             return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
 
@@ -391,9 +391,8 @@ public static class SkillFactory
             return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
 
         if (skillName == "Recarmdra")
-            return new Skill(skillData, new SpecialEffect(view), new PartySelector(view, boardManager));
-        */
-
+            return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
+        
 
         // ===========================================================
         // REVIVE SKILLS

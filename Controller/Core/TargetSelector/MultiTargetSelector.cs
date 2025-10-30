@@ -1,4 +1,5 @@
-﻿using Shin_Megami_Tensei_View;
+﻿using Avalonia.Styling;
+using Shin_Megami_Tensei_View;
 
 namespace Shin_Megami_Tensei;
 
@@ -22,8 +23,34 @@ public sealed class MultiEnemySelector : TargetSelectorBase
             playerSkillUseCount,
             totalHits
         );
+        
+        List<UnitBase> orderedByBoard = TargetOrderingHelper.OrderByBoardPreservingRepeats(
+            selectedTargets,
+            Board.GetBoardForPlayer(enemyPlayerId)
+        );
+        /*
+        // DEBUG
+        Console.WriteLine("===== DEBUG MultiTarget Order =====");
+        Console.WriteLine("SelectedTargets (orden original del algoritmo):");
+        foreach (var unit in selectedTargets)
+        {
+            Console.WriteLine($" - {unit.Name}");
+        }
 
+        Console.WriteLine("\nBoard actual (izq -> der):");
+        foreach (var kv in Board.GetBoardForPlayer(enemyPlayerId))
+        {
+            Console.WriteLine($" {kv.Key}: {kv.Value?.Name ?? "(vacío)"}");
+        }
+
+        Console.WriteLine("\nOrderedByBoard (orden final para imprimir):");
+        foreach (var unit in orderedByBoard)
+        {
+            Console.WriteLine($" - {unit.Name}");
+        }
+        Console.WriteLine("=====================================\n");
+        */
         SelectorView.ShowSeparator();
-        return selectedTargets;
+        return orderedByBoard;
     }
 }
