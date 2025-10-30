@@ -8,7 +8,6 @@ public class EffectView : AbstractView
 
     public void ShowHealEffect(UnitBase casterUnit, UnitBase targetUnit, int healAmount)
     {
-        View.WriteLine("----------------------------------------");
         View.WriteLine($"{casterUnit.Name} cura a {targetUnit.Name}");
         View.WriteLine($"{targetUnit.Name} recibe {healAmount} de HP");
         View.WriteLine($"{targetUnit.Name} termina con HP:{targetUnit.Stats.HP}/{targetUnit.Stats.MaxHP}");
@@ -16,7 +15,6 @@ public class EffectView : AbstractView
 
     public void ShowReviveEffect(UnitBase casterUnit, UnitBase targetUnit, int healAmount)
     {
-        View.WriteLine("----------------------------------------");
         View.WriteLine($"{casterUnit.Name} revive a {targetUnit.Name}");
         View.WriteLine($"{targetUnit.Name} recibe {healAmount} de HP");
         View.WriteLine($"{targetUnit.Name} termina con HP:{targetUnit.Stats.HP}/{targetUnit.Stats.MaxHP}");
@@ -62,5 +60,10 @@ public class EffectView : AbstractView
         View.WriteLine($"{casterUnit.Name} revive a {targetUnit.Name}");
         View.WriteLine($"{targetUnit.Name} recibe {healAmount} de HP");
         View.WriteLine($"{targetUnit.Name} termina con HP:{targetUnit.Stats.HP}/{targetUnit.Stats.MaxHP}");
+    }
+    
+    public void ShowHpStatus(UnitBase unit)
+    {
+        View.WriteLine($"{unit.Name} termina con HP:{unit.Stats.HP}/{unit.Stats.MaxHP}");
     }
 }

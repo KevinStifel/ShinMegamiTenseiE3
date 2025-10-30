@@ -10,7 +10,8 @@ public sealed class HealEffect : EffectBase
         UnitBase casterUnit,
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
-    {
+    { 
+        EffectView.ShowSeparator();
         foreach (var targetUnit in targets)
         {
             int healAmount = HealCalculator.CalculateHealAmount(targetUnit, skillExecutionContext.SkillData);

@@ -11,6 +11,7 @@ public sealed class ReviveEffect : EffectBase
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
     {
+        EffectView.ShowSeparator();
         foreach (var targetUnit in targets)
         {
             if (IsTargetAlive(targetUnit))

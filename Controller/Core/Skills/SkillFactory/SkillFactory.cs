@@ -391,7 +391,7 @@ public static class SkillFactory
             return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
 
         if (skillName == "Recarmdra")
-            return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
+            return new Skill(skillData, new MassReviveHealEffect(view), new MassReviveAllySelector(view, boardManager));
         
 
         // ===========================================================
