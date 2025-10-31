@@ -15,4 +15,9 @@ public sealed class DrainAffinityBehavior : AffinityBehavior
     {
         return new TurnChange(fullTurns, blinkingTurns, 0);
     }
+    
+    public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        // No hay casos Drain para Light/Dark
+    }
 }

@@ -16,4 +16,10 @@ public sealed class RepelAffinityView : AffinityViewBase
     {
         ShowHp(attackerUnit);
     }
+    
+    public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+        View.WriteLine($"{casterUnit.Name} ha sido eliminado");
+    }
 }

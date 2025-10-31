@@ -11,4 +11,6 @@ public abstract class AffinityBehavior
     public abstract void ApplyEffect(UnitBase casterUnit, UnitBase targetUnit, int damage);
 
     public abstract TurnChange CalculateTurnEffect(int fullTurns, int blinkingTurns);
+    
+    public virtual void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData) { }
 }

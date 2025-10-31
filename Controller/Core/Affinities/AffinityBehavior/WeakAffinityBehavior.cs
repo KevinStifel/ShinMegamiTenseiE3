@@ -19,4 +19,9 @@ public sealed class WeakAffinityBehavior : AffinityBehavior
             ? new TurnChange(1, 0, 1) 
             : new TurnChange(0, 1, 0);
     }
+    
+    public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
+    }
 }

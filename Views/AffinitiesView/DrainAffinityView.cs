@@ -11,4 +11,9 @@ public sealed class DrainAffinityView : AffinityViewBase
         View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
         View.WriteLine($"{targetUnit.Name} absorbe {damage} daño");
     }
+    
+    public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+    }
 }

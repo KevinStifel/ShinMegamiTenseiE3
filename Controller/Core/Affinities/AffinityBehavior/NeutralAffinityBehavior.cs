@@ -15,4 +15,15 @@ public sealed class NeutralAffinityBehavior : AffinityBehavior
         => blinkingTurns > 0
             ? new TurnChange(0, 1, 0)
             : new TurnChange(1, 0, 0);
+    
+    public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        int casterLck = casterUnit.Stats.Lck;
+        int targetLck = targetUnit.Stats.Lck;
+        int power = skillData.Power;
+
+        if (casterLck + power >= targetLck)
+            targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
+    }
+
 }

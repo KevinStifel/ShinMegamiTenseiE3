@@ -12,4 +12,19 @@ public sealed class ResistAffinityView : AffinityViewBase
         View.WriteLine($"{targetUnit.Name} es resistente el ataque de {casterUnit.Name}");
         View.WriteLine($"{targetUnit.Name} recibe {damage} de daño");
     }
+    
+    public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+
+        if (targetUnit.Stats.HP == 0)
+        {
+            View.WriteLine($"{targetUnit.Name} es resistente el ataque de {casterUnit.Name}");
+            View.WriteLine($"{targetUnit.Name} ha sido eliminado");
+        }
+        else
+        {
+            View.WriteLine($"{casterUnit.Name} ha fallado el ataque");
+        }
+    }
 }

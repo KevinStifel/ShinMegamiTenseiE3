@@ -12,4 +12,11 @@ public sealed class WeakAffinityView : AffinityViewBase
         View.WriteLine($"{targetUnit.Name} es débil contra el ataque de {casterUnit.Name}");
         View.WriteLine($"{targetUnit.Name} recibe {damage} de daño");
     }
+    
+    public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+        View.WriteLine($"{targetUnit.Name} es débil contra el ataque de {casterUnit.Name}");
+        View.WriteLine($"{targetUnit.Name} ha sido eliminado");
+    }
 }

@@ -264,25 +264,21 @@ public static class SkillFactory
         // ===========================================================
 
         // --- Single ---
-        /*
         if (skillName == "Hama")
-            return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         if (skillName == "Hamaon")
-            return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-        */
+            return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         // --- All ---
-        /*
         if (skillName == "Mahama")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
         if (skillName == "Mahamaon")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
         if (skillName == "Judgement Light")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
-        */
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
 
         // ===========================================================
@@ -290,25 +286,22 @@ public static class SkillFactory
         // ===========================================================
 
         // --- Single ---
-        /*
         if (skillName == "Mudo")
-            return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         if (skillName == "Mudoon")
-            return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        */
+            return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         // --- All ---
-        /*
         if (skillName == "Mamudo")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
         if (skillName == "Mamudoon")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
         if (skillName == "Die for Me!")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
-        */
+            return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
+
 
 
         // ===========================================================

@@ -20,4 +20,10 @@ public sealed class NullAffinityBehavior : AffinityBehavior
 
         return new TurnChange(fullTurnsConsumed, blinkingTurnsConsumed, 0);
     }
+    
+    public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        // Siempre bloquea
+    }
+
 }

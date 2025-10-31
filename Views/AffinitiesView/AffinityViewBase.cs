@@ -23,4 +23,7 @@ public abstract class AffinityViewBase
     {
         View.WriteLine($"{unit.Name} termina con HP:{unit.Stats.HP}/{unit.Stats.MaxHP}");
     }
+
+    public virtual void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData){}
+
 }

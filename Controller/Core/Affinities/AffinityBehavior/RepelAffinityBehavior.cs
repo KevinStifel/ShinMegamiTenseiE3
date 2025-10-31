@@ -17,4 +17,10 @@ public sealed class RepelAffinityBehavior : AffinityBehavior
     {
         return new TurnChange(fullTurns, blinkingTurns, 0);
     }
+    
+    public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
+    {
+        casterUnit.Stats.TakeDamage(casterUnit.Stats.HP);
+    }
+
 }
