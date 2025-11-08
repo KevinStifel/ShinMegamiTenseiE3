@@ -28,6 +28,7 @@ public sealed class InvitationEffect : EffectBase
 
         turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
         ApplyNeutralTurnChange(turnManager);
+        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
     }
     private static void PlaceMonsterOnBoard(
         Dictionary<string, UnitBase?> playerBoard,

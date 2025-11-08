@@ -23,13 +23,15 @@ public sealed class EnergyDrainEffect : EffectBase
         _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
 
         var affinityBehavior = GetAffinityBehavior(caster, _elementType);
+        caster.Stats.UseMP(_skillData.Cost);
 
         foreach (var target in targets)
             ApplyEnergyDrain(caster, target);
-
+        
         var turnChange = _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
+
 
     private void ApplyEnergyDrain(UnitBase caster, UnitBase target)
     {
@@ -42,7 +44,7 @@ public sealed class EnergyDrainEffect : EffectBase
 
         target.Stats.UseMP(actualMpDrain);
         caster.Stats.RestoreMP(actualMpDrain);
-
+        
         EffectView.ShowHpMpDrainEffect(caster, target, actualHpDrain, actualMpDrain);
 
         if (target.Stats.HP == 0)

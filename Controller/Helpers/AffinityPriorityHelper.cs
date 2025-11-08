@@ -13,6 +13,9 @@ public static class AffinityPriorityHelper
         foreach (var target in targets)
         {
             string reaction = target.Affinity.GetAffinityReaction(elementType);
+            
+            // revisar reaction y si se cumple que es neutral o resist convertirla a un miss
+            
             int priority = GetPriorityValue(reaction);
 
             if (priority < topPriority)

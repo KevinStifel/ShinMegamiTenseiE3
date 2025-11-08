@@ -35,13 +35,13 @@ public sealed class DamageEffect : EffectBase
         {
             var currentTargetUnit = targetEnemyUnits[index];
 
-            // ANALIZAR CADENA DOBLE IF
+            // ANALIZAR CADENA DOBLE IF --- Solución:
             if (previousTarget != null && HasTargetChanged(previousTarget, currentTargetUnit))
             {
-                var previousBehavior = GetAffinityBehavior(previousTarget, _elementType);
+                var previousAffinityBehavior = GetAffinityBehavior(previousTarget, _elementType);
                 
                 if (HasTargetChanged(previousTarget, currentTargetUnit) &&
-                    previousBehavior.ShouldShowHpAfterAttack())
+                    previousAffinityBehavior.ShouldShowHpAfterAttack())
                 {
                     ShowHp(casterUnit, previousTarget!);
                 }
@@ -65,9 +65,10 @@ public sealed class DamageEffect : EffectBase
 
             previousTarget = currentTargetUnit;
         }
-
+        
         var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityAffinityReaction);
         ApplyTurnChange(topAffinityBehavior);
+        casterUnit.Stats.UseMP(_skillData.Cost);
     }
 
     private void ApplyDamageToTarget(UnitBase casterUnit, UnitBase targetUnit)

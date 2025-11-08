@@ -24,6 +24,7 @@ public sealed class ReviveEffect : EffectBase
         }
 
         ApplyNeutralTurnChange(skillExecutionContext.TurnManager);
+        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
     }
 
     private static bool IsTargetAlive(UnitBase targetUnit)

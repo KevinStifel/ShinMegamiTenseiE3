@@ -30,5 +30,6 @@ public sealed class SpecialEffect : EffectBase
         turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
 
         ApplyNeutralTurnChange(turnManager);
+        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
     }
 }

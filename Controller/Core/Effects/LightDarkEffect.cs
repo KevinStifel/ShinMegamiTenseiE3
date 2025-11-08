@@ -23,10 +23,7 @@ public sealed class LightDarkEffect : EffectBase
         _currentPlayerId = context.CurrentPlayerId;
         _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
         _elementType = AffinityMapper.Parse(_skillData.Type);
-
-        Console.WriteLine($"[DEBUG] Iniciando LightDarkEffect con skill: {_skillData.Name}, elemento: {_elementType}");
-        Console.WriteLine($"[DEBUG] Caster: {casterUnit.Name}, Targets: {targets.Count}");
-
+        
         foreach (var target in targets)
             ApplyLightDarkToTarget(casterUnit, target);
 
@@ -35,40 +32,29 @@ public sealed class LightDarkEffect : EffectBase
 
         var topBehavior = AffinityBehaviorFactory.Create(topAffinity);
         ApplyTurnChange(topBehavior);
+        casterUnit.Stats.UseMP(_skillData.Cost);
     }
 
     private void ApplyLightDarkToTarget(UnitBase caster, UnitBase target)
     {
-        Console.WriteLine($"[DEBUG] -> Procesando ataque a {target.Name}");
+        var affinityBehavior = GetAffinityBehavior(target, _elementType);
+        Console.WriteLine($"[DEBUG] AffinityBehavior detectado: {affinityBehavior.Type}");
 
-        var behavior = GetAffinityBehavior(target, _elementType);
-        Console.WriteLine($"[DEBUG] AffinityBehavior detectado: {behavior.Type}");
-
-        var affinityView = AffinityViewFactory.Create(behavior.Type, View, _elementType);
-
-        Console.WriteLine($"[DEBUG] Ejecutando ApplyLightDarkEffect...");
-        behavior.ApplyLightDarkEffect(caster, target, _skillData);
-
-        Console.WriteLine($"[DEBUG] Mostrando LightDarkReaction...");
+        var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
+        affinityBehavior.ApplyLightDarkEffect(caster, target, _skillData);
         affinityView.ShowLightDarkReaction(caster, target, _skillData);
-
-        Console.WriteLine($"[DEBUG] HP {target.Name}: {target.Stats.HP}/{target.Stats.MaxHP}");
         EffectView.ShowHpStatus(target);
 
         if (target.Stats.HP == 0)
         {
-            Console.WriteLine($"[DEBUG] {target.Name} ha muerto, eliminando del tablero...");
             _boardManager.HandleUnitDeath(_enemyPlayerId, target);
         }
 
-        Console.WriteLine($"[DEBUG] Fin de procesamiento para {target.Name}");
     }
 
     private void ApplyTurnChange(AffinityBehavior behavior)
     {
-        Console.WriteLine($"[DEBUG] Aplicando cambio de turno ({behavior.Type})...");
         var turnChange = _turnManager.ApplyAffinityTurnEffect(behavior);
         ActionView.ShowTurnConsumption(turnChange);
-        Console.WriteLine($"[DEBUG] TurnChange => FullConsumed: {turnChange.ConsumedFull}, BlinkConsumed: {turnChange.ConsumedBlinking}, BlinkGained: {turnChange.GainedBlinking}");
     }
 }

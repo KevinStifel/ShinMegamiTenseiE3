@@ -20,8 +20,6 @@ public sealed class UseSkillAction : CombatActionBase
 
         var skillInstance = CreateSkillInstance(selectedSkillData, boardManager);
         skillInstance.Apply(currentPlayerId, boardManager, turnManager);
-
-        ConsumeMana(attackerUnit, selectedSkillData);
     }
 
     private SkillData? PromptSkillSelection(UnitBase attackerUnit)

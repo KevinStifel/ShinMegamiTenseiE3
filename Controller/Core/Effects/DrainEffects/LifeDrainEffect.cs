@@ -23,6 +23,7 @@ public sealed class LifeDrainEffect : EffectBase
         _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
 
         var affinityBehavior = GetAffinityBehavior(caster, _elementType);
+        caster.Stats.UseMP(_skillData.Cost);
 
         foreach (var target in targets)
             ApplyLifeDrain(caster, target);

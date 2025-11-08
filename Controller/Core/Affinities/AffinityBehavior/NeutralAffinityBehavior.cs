@@ -10,7 +10,7 @@ public sealed class NeutralAffinityBehavior : AffinityBehavior
     {
         targetUnit.Stats.TakeDamage(damage);
     }
-
+    
     public override TurnChange CalculateTurnEffect(int fullTurns, int blinkingTurns)
         => blinkingTurns > 0
             ? new TurnChange(0, 1, 0)
@@ -25,5 +25,6 @@ public sealed class NeutralAffinityBehavior : AffinityBehavior
         if (casterLck + power >= targetLck)
             targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
     }
+    
 
 }

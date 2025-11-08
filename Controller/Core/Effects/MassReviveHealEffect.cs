@@ -41,6 +41,7 @@ public sealed class MassReviveHealEffect : EffectBase
         ApplyNeutralTurnChange(turnManager);
         
         turnManager.SyncWithBoard(boardManager, currentPlayerId);
+        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
     }
 
     private static bool IsDead(UnitBase unit) => unit.Stats.HP <= 0;

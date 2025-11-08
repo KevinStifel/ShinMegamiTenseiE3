@@ -356,9 +356,7 @@ public static class SkillFactory
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
 
         if (skillName == "Serpent of Sheol")
-            return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
-        
-
+            return new Skill(skillData, new LifeDrainEffect(view), new AllEnemySelector(view, boardManager));
 
         // ===========================================================
         // HEAL SKILLS

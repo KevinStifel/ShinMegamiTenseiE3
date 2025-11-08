@@ -29,5 +29,4 @@ public sealed class ResistAffinityBehavior : AffinityBehavior
         if (casterLck + power >= 2 * targetLck)
             targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
     }
-
 }
