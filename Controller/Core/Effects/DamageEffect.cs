@@ -33,7 +33,7 @@ public sealed class DamageEffect : EffectBase
         casterUnit.Stats.UseMP(_skillData.Cost);
     }
 
-    private void InitializeEffect(SkillExecutionContext context)
+    protected override void InitializeEffect(SkillExecutionContext context)
     {
         _turnManager = context.TurnManager;
         _boardManager = context.BoardManager;

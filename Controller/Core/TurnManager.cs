@@ -43,7 +43,7 @@ public class TurnManager
         RotateAttackOrder();
     }
 
-    public void UpdateOrderAfterSummon(UnitBase summoner, UnitBase summoned, UnitBase? replaced)
+    public void UpdateOrder(UnitBase summoner, UnitBase summoned, UnitBase? replaced)
     {
         var order = _currentTurn.AttackOrder;
 

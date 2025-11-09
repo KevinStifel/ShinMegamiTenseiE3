@@ -9,26 +9,39 @@ public sealed class ReviveEffect : EffectBase
     public override void ApplyEffect(
         UnitBase casterUnit,
         List<UnitBase> targets,
-        SkillExecutionContext skillExecutionContext)
+        SkillExecutionContext context)
     {
         EffectView.ShowSeparator();
-        foreach (var targetUnit in targets)
-        {
-            if (IsTargetAlive(targetUnit))
-                continue;
 
-            int healAmount = HealCalculator.CalculateHealAmount(targetUnit, skillExecutionContext.SkillData);
+        ReviveDeadUnits(casterUnit, targets, context.SkillData);
 
-            targetUnit.Stats.Heal(healAmount);
-            EffectView.ShowReviveEffect(casterUnit, targetUnit, healAmount);
-        }
-
-        ApplyNeutralTurnChange(skillExecutionContext.TurnManager);
-        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
+        ApplyNeutralTurnChange(context.TurnManager);
+        casterUnit.Stats.UseMP(context.SkillData.Cost);
     }
 
-    private static bool IsTargetAlive(UnitBase targetUnit)
+    private void ReviveDeadUnits(
+        UnitBase casterUnit,
+        IEnumerable<UnitBase> targets,
+        SkillData skillData)
     {
-        return targetUnit.Stats.HP > 0;
+        foreach (var target in targets)
+        {
+            if (!ShouldRevive(target))
+                continue;
+
+            ReviveUnit(casterUnit, target, skillData);
+        }
+    }
+
+    private static bool ShouldRevive(UnitBase target)
+    {
+        return target.Stats.HP == 0;
+    }
+
+    private void ReviveUnit(UnitBase casterUnit, UnitBase target, SkillData skillData)
+    {
+        int amount = HealCalculator.CalculateHealAmount(target, skillData);
+        target.Stats.Heal(amount);
+        EffectView.ShowReviveEffect(casterUnit, target, amount);
     }
 }

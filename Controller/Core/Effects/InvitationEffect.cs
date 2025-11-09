@@ -77,6 +77,6 @@ public sealed class InvitationEffect : EffectBase
         UnitBase monsterToSummon, 
         UnitBase? replacedUnit)
     {
-        _turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
+        _turnManager.UpdateOrder(casterUnit, monsterToSummon, replacedUnit);
     }
 }

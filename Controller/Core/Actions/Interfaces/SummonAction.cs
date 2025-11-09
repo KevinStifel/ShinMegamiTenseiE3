@@ -108,7 +108,7 @@ public sealed class SummonAction : CombatActionBase
         SummonData summonData, 
         UnitBase? displacedUnit)
     {
-        turnManager.UpdateOrderAfterSummon(
+        turnManager.UpdateOrder(
             summonData.Summoner, summonData.MonsterToSummon, displacedUnit);
     }
 
