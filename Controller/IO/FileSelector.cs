@@ -18,6 +18,7 @@ public class FileSelector
         _fileSelectorView.ShowTitle();
 
         var teamFiles = Directory.GetFiles(_teamsFolder, "*.txt");
+        Array.Sort(teamFiles, StringComparer.OrdinalIgnoreCase);
 
         for (int index = 0; index < teamFiles.Length; index++)
         {
