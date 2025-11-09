@@ -64,18 +64,18 @@ public class TeamFactory
     
     private List<SkillData> BuildSkills(List<string> skillNames)
     {
-        return skillNames
-            .Select(skillName => _repository.GetSkill(skillName))
-            .Select(skillDto => new SkillData(
-                skillDto.Name,
-                skillDto.Type,
-                skillDto.Cost,
-                skillDto.Power,
-                skillDto.Target,
-                skillDto.Hits,
-                skillDto.Effect
-            ))
-            .ToList();
-    }
+        var skillDtos = skillNames.Select(skillName => _repository.GetSkill(skillName));
 
+        var skillDataList = skillDtos.Select(skillDto => new SkillData(
+            skillDto.Name,
+            skillDto.Type,
+            skillDto.Cost,
+            skillDto.Power,
+            skillDto.Target,
+            skillDto.Hits,
+            skillDto.Effect
+        ));
+
+        return skillDataList.ToList();
+    }
 }
