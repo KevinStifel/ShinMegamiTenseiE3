@@ -6,9 +6,13 @@ public sealed class SummonAction : CombatActionBase
 {
     public SummonAction(View view) : base(view) { }
 
-    public override void ExecuteAction(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
+    public override void ExecuteAction(
+        int currentPlayerId, 
+        BoardManager boardManager, 
+        TurnManager turnManager)
     {
-        var (summonData, displacedUnit) = PerformSummon(currentPlayerId, boardManager, turnManager);
+        var (summonData, displacedUnit) = PerformSummon(
+            currentPlayerId, boardManager, turnManager);
         
         UpdateTurnOrder(turnManager, summonData, displacedUnit);
         
@@ -16,7 +20,10 @@ public sealed class SummonAction : CombatActionBase
         ActionView.ShowTurnConsumption(turnChange);
     }
 
-    private (SummonData SummonData, UnitBase? DisplacedUnit) PerformSummon(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
+    private (SummonData SummonData, UnitBase? DisplacedUnit) PerformSummon(
+        int currentPlayerId, 
+        BoardManager boardManager, 
+        TurnManager turnManager)
     {
         var summonerUnit = turnManager.GetAttackerOnTurn();
         var summonEffect = new SummonEffect(View);
@@ -41,21 +48,29 @@ public sealed class SummonAction : CombatActionBase
         return availableReserveUnits[selectedIndex];
     }
 
-    private static PlayerBoardFormation CreatePlayerBoardFormation(BoardManager boardManager, int currentPlayerId)
+    private static PlayerBoardFormation CreatePlayerBoardFormation(
+        BoardManager boardManager, 
+        int currentPlayerId)
     {
         var activeBoard = boardManager.SelectMutableBoard(currentPlayerId);
         var reserveUnits = boardManager.GetAliveReserveUnitsForPlayer(currentPlayerId);
         return new PlayerBoardFormation(activeBoard, reserveUnits);
     }
 
-    private UnitBase? GetDisplacedUnit(SummonData summonData, SummonEffect summonEffect, PlayerBoardFormation boardFormation)
+    private UnitBase? GetDisplacedUnit(
+        SummonData summonData, 
+        SummonEffect summonEffect, 
+        PlayerBoardFormation boardFormation)
     {
         return summonData.Summoner is Samurai
             ? SummonWithSamurai(summonData, summonEffect, boardFormation)
             : SummonWithMonster(summonData, summonEffect, boardFormation);
     }
 
-    private UnitBase? SummonWithSamurai(SummonData summonData, SummonEffect summonEffect, PlayerBoardFormation boardFormation)
+    private UnitBase? SummonWithSamurai(
+        SummonData summonData, 
+        SummonEffect summonEffect, 
+        PlayerBoardFormation boardFormation)
     {
         var summonOptions = GetSummonPositions(boardFormation.ActiveBoard);
         int selectedIndex = ActionView.ReadSummonPositionIndex(summonOptions);
@@ -65,10 +80,14 @@ public sealed class SummonAction : CombatActionBase
         var (boardPosition, displacedUnit) = summonOptions[selectedIndex];
         var placement = new SummonPlacement(boardPosition, displacedUnit);
 
-        return summonEffect.ApplySamuraiSummon(summonData.MonsterToSummon, boardFormation, placement);
+        return summonEffect.ApplySamuraiSummon(
+            summonData.MonsterToSummon, boardFormation, placement);
     }
 
-    private UnitBase? SummonWithMonster(SummonData summonData, SummonEffect summonEffect, PlayerBoardFormation boardFormation)
+    private UnitBase? SummonWithMonster(
+        SummonData summonData, 
+        SummonEffect summonEffect, 
+        PlayerBoardFormation boardFormation)
     {
         return summonEffect.ApplyMonsterSummon(summonData, boardFormation);
     }
@@ -77,15 +96,20 @@ public sealed class SummonAction : CombatActionBase
         Dictionary<string, UnitBase?> playerBoard)
     {
         var summonablePositions = GameConstants.BoardPositions.Skip(1);
+        
         var summonSlots = summonablePositions.Select(position =>
             (BoardPosition: position, DisplacedUnit: playerBoard[position]));
         
         return summonSlots.ToList();
     }
     
-    private static void UpdateTurnOrder(TurnManager turnManager, SummonData summonData, UnitBase? displacedUnit)
+    private static void UpdateTurnOrder(
+        TurnManager turnManager, 
+        SummonData summonData, 
+        UnitBase? displacedUnit)
     {
-        turnManager.UpdateOrderAfterSummon(summonData.Summoner, summonData.MonsterToSummon, displacedUnit);
+        turnManager.UpdateOrderAfterSummon(
+            summonData.Summoner, summonData.MonsterToSummon, displacedUnit);
     }
 
     private static TurnChange ConsumeTurn(TurnManager turnManager)
