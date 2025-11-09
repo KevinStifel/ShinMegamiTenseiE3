@@ -1,4 +1,6 @@
 ﻿using Shin_Megami_Tensei;
+using System;
+using System.Collections.Generic;
 
 namespace Shin_Megami_Tensei_View;
 
@@ -8,16 +10,8 @@ public sealed class SpecialSelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase summonerUnit, List<UnitBase> summonableMonsters)
     {
-        View.WriteLine("----------------------------------------");
-        View.WriteLine("Seleccione un monstruo para invocar");
-
-        for (int index = 0; index < summonableMonsters.Count; index++)
-        {
-            var monster = summonableMonsters[index];
-            View.WriteLine($"{index + 1}-{monster.Name} HP:{monster.Stats.HP}/{monster.Stats.MaxHP} MP:{monster.Stats.MP}/{monster.Stats.MaxMP}");
-        }
-
-        View.WriteLine($"{summonableMonsters.Count + 1}-Cancelar");
+        string title = "Seleccione un monstruo para invocar";
+        ShowTargetList(title, summonableMonsters);
     }
 
     public void ShowSummonPositions(List<(string Position, UnitBase? currentUnitAtPosition)> summonOptions)

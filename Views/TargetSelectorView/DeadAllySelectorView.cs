@@ -9,15 +9,11 @@ public sealed class DeadAllySelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase attackerUnit, List<UnitBase> deadAllies)
     {
-        View.WriteLine("----------------------------------------");
-        View.WriteLine($"Seleccione un objetivo para {attackerUnit.Name}");
-
-        for (int index = 0; index < deadAllies.Count; index++)
-        {
-            var ally = deadAllies[index];
-            View.WriteLine($"{index + 1}-{ally.Name} HP:0/{ally.Stats.MaxHP} MP:{ally.Stats.MP}/{ally.Stats.MaxMP}");
-        }
-
-        View.WriteLine($"{deadAllies.Count + 1}-Cancelar");
+        string title = $"Seleccione un objetivo para {attackerUnit.Name}";
+        ShowTargetList(title, deadAllies);
+    }
+    protected override string FormatUnitDetails(UnitBase unit)
+    {
+        return $"{unit.Name} HP:0/{unit.Stats.MaxHP} MP:{unit.Stats.MP}/{unit.Stats.MaxMP}";
     }
 }
