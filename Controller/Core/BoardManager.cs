@@ -10,6 +10,24 @@
         public BoardManager(Board board)
         {
             _board = board;
+            InitializeBoards();
+        }
+        
+        private void InitializeBoards()
+        {
+            _board.PlayerOneBoard = InitializeBoard(_board.PlayerOneRoster);
+            _board.PlayerTwoBoard = InitializeBoard(_board.PlayerTwoRoster);
+        }
+
+        private Dictionary<string, UnitBase?> InitializeBoard(IReadOnlyList<UnitBase> teamUnits)
+        {
+            var board = new Dictionary<string, UnitBase?>(GameConstants.BoardPositions.Length);
+            for (var index = 0; index < GameConstants.BoardPositions.Length; index++)
+            {
+                var position = GameConstants.BoardPositions[index];
+                board[position] = index < teamUnits.Count ? teamUnits[index] : null;
+            }
+            return board;
         }
         
         public void PrepareSummonData(int playerId, UnitBase monster, (string Position, UnitBase? Replaced) summonSlot)
@@ -79,6 +97,7 @@
             if (unit is Samurai) return;
             RemoveMonsterFromBoard(currentPlayerId, unit);
         }
+
 
         private void RemoveMonsterFromBoard(int playerId, UnitBase monster)
         {

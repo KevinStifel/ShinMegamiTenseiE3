@@ -2,8 +2,8 @@
 {
     public class Board
     {
-        public Dictionary<string, UnitBase?> PlayerOneBoard { get; }
-        public Dictionary<string, UnitBase?> PlayerTwoBoard { get; }
+        public Dictionary<string, UnitBase?> PlayerOneBoard { get; internal set; }
+        public Dictionary<string, UnitBase?> PlayerTwoBoard { get; internal set; }
 
         public List<UnitBase> PlayerOneRoster { get; }
         public List<UnitBase> PlayerTwoRoster { get; }
@@ -15,19 +15,8 @@
             PlayerOneRoster = new List<UnitBase>(playerOneUnits);
             PlayerTwoRoster = new List<UnitBase>(playerTwoUnits);
 
-            PlayerOneBoard = InitializeBoard(playerOneUnits);
-            PlayerTwoBoard = InitializeBoard(playerTwoUnits);
-        }
-
-        private static Dictionary<string, UnitBase?> InitializeBoard(List<UnitBase> teamUnits)
-        {
-            var board = new Dictionary<string, UnitBase?>(GameConstants.BoardPositions.Length);
-            for (var index = 0; index < GameConstants.BoardPositions.Length; index++)
-            {
-                var position = GameConstants.BoardPositions[index];
-                board[position] = index < teamUnits.Count ? teamUnits[index] : null;
-            }
-            return board;
+            PlayerOneBoard = new Dictionary<string, UnitBase?>();
+            PlayerTwoBoard = new Dictionary<string, UnitBase?>();
         }
     }
 }
