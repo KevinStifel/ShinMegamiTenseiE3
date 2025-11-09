@@ -13,16 +13,13 @@ public class CombatActionView : AbstractView
         for (int index = 0; index < enemies.Count; index++)
         {
             var targetUnit = enemies[index];
-            View.WriteLine($"{index + 1}-{targetUnit.Name} HP:{targetUnit.Stats.HP}/{targetUnit.Stats.MaxHP} MP:{targetUnit.Stats.MP}/{targetUnit.Stats.MaxMP}");
+            View.WriteLine($"{index + 1}-{targetUnit.Name} " +
+                           $"HP:{targetUnit.Stats.HP}/{targetUnit.Stats.MaxHP} " +
+                           $"MP:{targetUnit.Stats.MP}/{targetUnit.Stats.MaxMP}");
         }
         View.WriteLine($"{enemies.Count + 1}-Cancelar");
     }
-    public void ShowTurnConsumption(TurnChange turnChange)
-    {
-        View.WriteLine("----------------------------------------");
-        View.WriteLine($"Se han consumido {turnChange.ConsumedFull} Full Turn(s) y {turnChange.ConsumedBlinking} Blinking Turn(s)");
-        View.WriteLine($"Se han obtenido {turnChange.GainedBlinking} Blinking Turn(s)");
-    }
+    
     public void ShowAvailableSkills(UnitBase casterUnit, IReadOnlyList<SkillData> skills)
     {
         View.WriteLine("----------------------------------------");
@@ -46,11 +43,38 @@ public class CombatActionView : AbstractView
 
         return selectedOptionIndex;
     }
+    
+    public int ReadSummonIndex(List<UnitBase> reserveUnits)
+    {
+        ShowSummonMenu(reserveUnits);
+        var selection = ReadUserSelection();
+        var index = int.Parse(selection) - 1;
+        return IsCancelOption(index, reserveUnits.Count) ? -1 : index;
+    }
+    
+    public int ReadSummonPositionIndex(
+        List<(string position, UnitBase? unit)> options)
+    {
+        ShowSummonPositionMenu(options);
+        var selection = ReadUserSelection();
+        var index = int.Parse(selection) - 1;
+        return IsCancelOption(index, options.Count) ? -1 : index;
+    }
+
     public void ShowSurrender(UnitBase teamLeader, int playerId)
     {
         View.WriteLine("----------------------------------------");
         View.WriteLine($"{teamLeader.Name} (J{playerId}) se rinde");
     }
+
+    public void ShowTurnConsumption(TurnChange turnChange)
+    {
+        View.WriteLine("----------------------------------------");
+        View.WriteLine($"Se han consumido {turnChange.ConsumedFull} Full Turn(s) " +
+                       $"y {turnChange.ConsumedBlinking} Blinking Turn(s)");
+        View.WriteLine($"Se han obtenido {turnChange.GainedBlinking} Blinking Turn(s)");
+    }
+    
     private void ShowSummonMenu(List<UnitBase> reserveUnits)
     {
         View.WriteLine("----------------------------------------");
@@ -71,7 +95,8 @@ public class CombatActionView : AbstractView
         View.WriteLine($"{aliveUnits.Count + 1}-Cancelar");
     }
 
-    private void ShowSummonPositionMenu(List<(string Position, UnitBase? UnitToReplace)> summonOptions)
+    private void ShowSummonPositionMenu(
+        List<(string Position, UnitBase? UnitToReplace)> summonOptions)
     {
         View.WriteLine("----------------------------------------");
         View.WriteLine("Seleccione una posición para invocar");
@@ -88,26 +113,12 @@ public class CombatActionView : AbstractView
             }
             else
             {
-                View.WriteLine($"{optionIndex}-{unitToReplace.Name} HP:{unitToReplace.Stats.HP}/{unitToReplace.Stats.MaxHP} " +
-                               $"MP:{unitToReplace.Stats.MP}/{unitToReplace.Stats.MaxMP} (Puesto {humanSlot})");
+                View.WriteLine($"{optionIndex}-{unitToReplace.Name} " +
+                               $"HP:{unitToReplace.Stats.HP}/{unitToReplace.Stats.MaxHP} " +
+                               $"MP:{unitToReplace.Stats.MP}/{unitToReplace.Stats.MaxMP} " +
+                               $"(Puesto {humanSlot})");
             }
         }
         View.WriteLine($"{summonOptions.Count + 1}-Cancelar");
-    }
-
-    public int ReadSummonIndex(List<UnitBase> reserveUnits)
-    {
-        ShowSummonMenu(reserveUnits);
-        var selection = ReadUserSelection();
-        var index = int.Parse(selection) - 1;
-        return IsCancelOption(index, reserveUnits.Count) ? -1 : index;
-    }
-    
-    public int ReadSummonPositionIndex(List<(string position, UnitBase? unit)> options)
-    {
-        ShowSummonPositionMenu(options);
-        var selection = ReadUserSelection();
-        var index = int.Parse(selection) - 1;
-        return IsCancelOption(index, options.Count) ? -1 : index;
     }
 }

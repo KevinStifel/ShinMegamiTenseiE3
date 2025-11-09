@@ -8,13 +8,16 @@ public sealed class SpecialSelectorView : TargetSelectorViewBase
 {
     public SpecialSelectorView(View view) : base(view) { }
 
-    public override void ShowAvailableTargets(UnitBase summonerUnit, List<UnitBase> summonableMonsters)
+    public override void ShowAvailableTargets(
+        UnitBase summonerUnit, 
+        List<UnitBase> summonableMonsters)
     {
         string headerText = "Seleccione un monstruo para invocar";
         ShowTargetList(headerText, summonableMonsters);
     }
 
-    public void ShowSummonPositions(List<(string Position, UnitBase? currentUnitAtPosition)> summonOptions)
+    public void ShowSummonPositions(
+        List<(string Position, UnitBase? currentUnitAtPosition)> summonOptions)
     {
         View.WriteLine("Seleccione una posición para invocar");
 
@@ -23,9 +26,18 @@ public sealed class SpecialSelectorView : TargetSelectorViewBase
             var (position, currentUnitAtPosition) = summonOptions[index];
             int slotNumber = Array.IndexOf(GameConstants.BoardPositions, position) + 1;
 
-            string positionInfo = currentUnitAtPosition == null
-                ? $"{index + 1}-Vacío (Puesto {slotNumber})"
-                : $"{index + 1}-{currentUnitAtPosition.Name} HP:{currentUnitAtPosition.Stats.HP}/{currentUnitAtPosition.Stats.MaxHP} MP:{currentUnitAtPosition.Stats.MP}/{currentUnitAtPosition.Stats.MaxMP} (Puesto {slotNumber})";
+            string positionInfo;
+            if (currentUnitAtPosition == null)
+            {
+                positionInfo = $"{index + 1}-Vacío (Puesto {slotNumber})";
+            }
+            else
+            {
+                positionInfo = $"{index + 1}-{currentUnitAtPosition.Name} " +
+                               $"HP:{currentUnitAtPosition.Stats.HP}/{currentUnitAtPosition.Stats.MaxHP} " +
+                               $"MP:{currentUnitAtPosition.Stats.MP}/{currentUnitAtPosition.Stats.MaxMP} " +
+                               $"(Puesto {slotNumber})";
+            }
 
             View.WriteLine(positionInfo);
         }
