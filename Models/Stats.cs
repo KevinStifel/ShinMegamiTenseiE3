@@ -4,8 +4,8 @@ namespace Shin_Megami_Tensei;
 
 public class Stats
 {
-    public int HP { get; private set; }
-    public int MP { get; private set; }
+    public int HP  { get; private set; }
+    public int MP  { get; private set; }
 
     public int MaxHP { get; }
     public int MaxMP { get; }
@@ -31,31 +31,20 @@ public class Stats
     }
 
     public bool HasEnoughMP(int cost)
-    {
-        return MP >= cost;
-    }
+        => MP >= cost;
 
     public void UseMP(int cost)
-    {
-        MP = Math.Max(0, MP - cost);
-    }
+        => MP = CombatMath.ClampAtLeast(MP - cost, 0);
 
     public void RestoreMP(int amount)
-    {
-        MP = Math.Min(MaxMP, MP + amount);
-    }
+        => MP = CombatMath.ClampAtMost(MP + amount, MaxMP);
 
     public void TakeDamage(int amount)
-    {
-        HP = Math.Max(0, HP - amount);
-    }
+        => HP = CombatMath.ClampAtLeast(HP - amount, 0);
 
     public void Heal(int amount)
-    {
-        HP = Math.Min(MaxHP, HP + amount);
-    }
+        => HP = CombatMath.ClampAtMost(HP + amount, MaxHP);
+
     public override string ToString()
-    {
-        return $"HP:{HP}/{MaxHP} MP:{MP}/{MaxMP}";
-    }
+        => $"HP:{HP}/{MaxHP} MP:{MP}/{MaxMP}";
 }

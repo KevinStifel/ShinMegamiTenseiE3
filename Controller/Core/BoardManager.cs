@@ -40,7 +40,7 @@
             if (_preparedSummons.TryGetValue(playerId, out var data))
                 return (data.Position, data.Replaced);
 
-            throw new InvalidOperationException("No hay datos preparados para la invocación.");
+            throw new PreparedSummonDataMissingException(playerId);
         }
         
         public Dictionary<string, UnitBase?> SelectMutableBoard(int playerId)

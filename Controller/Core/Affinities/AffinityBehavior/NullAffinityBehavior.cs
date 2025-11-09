@@ -14,9 +14,9 @@ public sealed class NullAffinityBehavior : AffinityBehavior
     {
         int totalTurnsToConsume = 2;
 
-        int blinkingTurnsConsumed = Math.Min(blinkingTurns, totalTurnsToConsume);
-        int turnsStillNeeded = totalTurnsToConsume - blinkingTurnsConsumed;
-        int fullTurnsConsumed = Math.Min(fullTurns, turnsStillNeeded);
+        int blinkingTurnsConsumed = CombatMath.ClampAtMost(blinkingTurns, totalTurnsToConsume);
+        int turnsStillNeeded      = totalTurnsToConsume - blinkingTurnsConsumed;
+        int fullTurnsConsumed     = CombatMath.ClampAtMost(fullTurns, turnsStillNeeded);
 
         return new TurnChange(fullTurnsConsumed, blinkingTurnsConsumed, 0);
     }

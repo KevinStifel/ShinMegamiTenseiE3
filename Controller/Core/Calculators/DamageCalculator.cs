@@ -69,12 +69,12 @@ public static class DamageCalculator
 
     private static double CalculateSquareRootDamage(int statValue, int skillPower)
     {
-        return Math.Sqrt(statValue * skillPower);
+        return CombatMath.SqrtOfStatTimesPower(statValue, skillPower);
     }
 
     private static int ApplyAffinityModifier(double baseDamage, AffinityBehavior affinityBehavior)
     {
         double modifiedDamage = affinityBehavior.ModifyDamage(baseDamage);
-        return (int)Math.Floor(modifiedDamage);
+        return CombatMath.RoundDamageDown(modifiedDamage);
     }
 }

@@ -37,8 +37,8 @@ public class TurnManager
 
     public void ApplyTurnChange(TurnChange change)
     {
-        _currentTurn.FullTurns = Math.Max(0, _currentTurn.FullTurns - change.ConsumedFull);
-        _currentTurn.BlinkingTurns = Math.Max(0, _currentTurn.BlinkingTurns - change.ConsumedBlinking);
+        _currentTurn.FullTurns     = CombatMath.ClampAtLeast(_currentTurn.FullTurns - change.ConsumedFull, 0);
+        _currentTurn.BlinkingTurns = CombatMath.ClampAtLeast(_currentTurn.BlinkingTurns - change.ConsumedBlinking, 0);
         _currentTurn.BlinkingTurns += change.GainedBlinking;
         RotateAttackOrder();
     }

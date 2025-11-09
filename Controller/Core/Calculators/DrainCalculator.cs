@@ -8,8 +8,8 @@
             SkillData skillData)
         {
             int baseDrain = CalculateBaseDrain(caster, skillData);
-            int actualHpDrain = Math.Min(target.Stats.HP, baseDrain);
-            int actualMpDrain = Math.Min(target.Stats.MP, baseDrain);
+            int actualHpDrain = CombatMath.ClampAtMost(baseDrain, target.Stats.HP);
+            int actualMpDrain = CombatMath.ClampAtMost(baseDrain, target.Stats.MP);
             
             return (actualHpDrain, actualMpDrain);
         }
@@ -20,7 +20,7 @@
             SkillData skillData)
         {
             int baseDrain = CalculateBaseDrain(caster, skillData);
-            return Math.Min(target.Stats.HP, baseDrain);
+            return CombatMath.ClampAtMost(baseDrain, target.Stats.HP);
         }
 
         public static int CalculateSpiritDrain(
@@ -29,12 +29,12 @@
             SkillData skillData)
         {
             int baseDrain = CalculateBaseDrain(caster, skillData);
-            return Math.Min(target.Stats.MP, baseDrain);
+            return CombatMath.ClampAtMost(baseDrain, target.Stats.MP);
         }
         
         private static int CalculateBaseDrain(UnitBase caster, SkillData skillData)
         {
-            return (int)Math.Sqrt(caster.Stats.Mag * skillData.Power);
-        }
+            var baseDrain = CombatMath.SqrtOfStatTimesPower(caster.Stats.Mag, skillData.Power);
+            return CombatMath.RoundDamageDown(baseDrain);        }
     }
 }
