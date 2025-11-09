@@ -22,11 +22,9 @@ public sealed class ResistAffinityBehavior : AffinityBehavior
     
     public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        int casterLck = casterUnit.Stats.Lck;
-        int targetLck = targetUnit.Stats.Lck;
-        int power = skillData.Power;
-
-        if (casterLck + power >= 2 * targetLck)
+        bool isSuccessful = LightDarkCalculator.IsResistSuccess(casterUnit, targetUnit, skillData);
+        
+        if (isSuccessful)
             targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
     }
 }

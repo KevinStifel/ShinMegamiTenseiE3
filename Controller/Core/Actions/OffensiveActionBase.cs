@@ -8,12 +8,17 @@ public abstract class OffensiveActionBase : CombatActionBase
 
     protected OffensiveActionBase(View view) : base(view) { }
 
-    public override void ExecuteAction(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
+    public override void ExecuteAction(
+        int currentPlayerId, 
+        BoardManager boardManager, 
+        TurnManager turnManager)
     {
         var attackerUnit = turnManager.GetAttackerOnTurn();
         var enemyPlayerId = BattleHelper.GetEnemyPlayerId(currentPlayerId);
 
-        var targetEnemyUnit = SelectTarget(attackerUnit, boardManager.GetAliveUnits(enemyPlayerId));
+        var targetEnemyUnit = SelectTarget(
+            attackerUnit, boardManager.GetAliveUnits(enemyPlayerId));
+        
         var affinityBehavior = CreateAffinityBehavior(targetEnemyUnit);
         var damage = CalculateDamage(attackerUnit, affinityBehavior);
 
@@ -44,7 +49,10 @@ public abstract class OffensiveActionBase : CombatActionBase
         return DamageCalculator.CalculateFinalDamage(attackerUnit, affinityBehavior, Element);
     }
     
-    private void ShowAffinityOutcome(UnitBase attackerUnit, UnitBase targetEnemyUnit, int inflictedDamage)
+    private void ShowAffinityOutcome(
+        UnitBase attackerUnit, 
+        UnitBase targetEnemyUnit, 
+        int inflictedDamage)
     {
         var affinityView = CreateAffinityView(targetEnemyUnit);
         ActionView.ShowSeparator();

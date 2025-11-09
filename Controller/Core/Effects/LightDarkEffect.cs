@@ -38,8 +38,6 @@ public sealed class LightDarkEffect : EffectBase
     private void ApplyLightDarkToTarget(UnitBase caster, UnitBase target)
     {
         var affinityBehavior = GetAffinityBehavior(target, _elementType);
-        Console.WriteLine($"[DEBUG] AffinityBehavior detectado: {affinityBehavior.Type}");
-
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
         affinityBehavior.ApplyLightDarkEffect(caster, target, _skillData);
         affinityView.ShowLightDarkReaction(caster, target, _skillData);

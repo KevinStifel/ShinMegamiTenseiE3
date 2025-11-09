@@ -18,13 +18,9 @@ public sealed class NeutralAffinityBehavior : AffinityBehavior
     
     public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        int casterLck = casterUnit.Stats.Lck;
-        int targetLck = targetUnit.Stats.Lck;
-        int power = skillData.Power;
-
-        if (casterLck + power >= targetLck)
+        bool isSuccessful = LightDarkCalculator.IsNeutralSuccess(casterUnit, targetUnit, skillData);
+        
+        if (isSuccessful)
             targetUnit.Stats.TakeDamage(targetUnit.Stats.HP);
     }
-    
-
 }
