@@ -9,12 +9,12 @@ public sealed class PartySelector : TargetSelectorBase
         : base(view, boardManager, new AllySelectorView(view)) { }
     public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
-        var aliveAllies = Board.GetAliveUnits(currentPlayerId).ToList();
+        var aliveAllies = Board.GetAliveUnits(currentPlayerId);
 
-        var orderedAllies = aliveAllies
-            .Where(u => u != activeUnit)
-            .Append(activeUnit)
-            .ToList();
+        var alliesExcludingSelf = aliveAllies.Where(unit => unit != activeUnit);
+        var alliesWithSelfLast = alliesExcludingSelf.Append(activeUnit);
+        var orderedAllies = alliesWithSelfLast.ToList();
+
         return orderedAllies;
     }
 }

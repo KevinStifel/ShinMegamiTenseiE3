@@ -12,9 +12,21 @@ public sealed class EnemySelector : TargetSelectorBase
 
     public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
+        List<UnitBase> availableEnemies = GetAvailableTargets(currentPlayerId);
+        UnitBase selectedTarget = SelectEnemyFromList(activeUnit, availableEnemies);
+
+        int totalHits = GetTotalHits(skillData, currentPlayerId);
+        return BuildRepeatedTargetList(selectedTarget, totalHits);
+    }
+
+    private List<UnitBase> GetAvailableTargets(int currentPlayerId)
+    {
         int enemyPlayerId = currentPlayerId == 1 ? 2 : 1;
-        List<UnitBase> enemies = Board.GetAliveUnits(enemyPlayerId);
-        
+        return Board.GetAliveUnits(enemyPlayerId);
+    }
+
+    private UnitBase SelectEnemyFromList(UnitBase activeUnit, List<UnitBase> enemies)
+    {
         SelectorView.ShowAvailableTargets(activeUnit, enemies);
         
         int selectedIndex = ReadTargetIndex(enemies);
@@ -23,10 +35,7 @@ public sealed class EnemySelector : TargetSelectorBase
         
         SelectorView.ShowSeparator();
         
-        UnitBase selectedTarget  = enemies[selectedIndex];
-        
-        int totalHits = GetTotalHits(skillData, currentPlayerId);
-        return BuildRepeatedTargetList(selectedTarget, totalHits);
+        return enemies[selectedIndex];
     }
     
     private int GetTotalHits(SkillData skillData, int currentPlayerId)
@@ -43,5 +52,4 @@ public sealed class EnemySelector : TargetSelectorBase
             repeatedTargets.Add(targetUnit);
         return repeatedTargets;
     }
-    
 }
