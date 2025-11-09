@@ -17,11 +17,10 @@ public static class AffinityMapper
         { "Almighty", AffinityElement.Almighty },
         
     };
-
     public static AffinityElement Parse(string type)
     {
         return Map.TryGetValue(type, out var element)
             ? element
-            : throw new ArgumentException($"Tipo de afinidad desconocido: {type}");
+            : throw new UnknownAffinityTypeException($"Tipo de afinidad desconocido: {type}");
     }
 }

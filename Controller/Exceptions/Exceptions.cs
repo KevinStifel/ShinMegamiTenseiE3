@@ -7,6 +7,9 @@
     public sealed class SkillNotFoundException(string message) : Exception(message);
     
     public sealed class InvalidActionOptionException(string message) : Exception(message);
+    
+    public sealed class UnknownAffinityTypeException(string message) : Exception(message);
+
 
     
 }

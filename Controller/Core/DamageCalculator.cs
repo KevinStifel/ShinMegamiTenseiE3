@@ -2,14 +2,20 @@
 
 public static class DamageCalculator
 {
-    public static int CalculateFinalDamage(UnitBase attacker, AffinityBehavior affinityBehavior, AffinityElement element)
+    public static int CalculateFinalDamage(
+        UnitBase attacker, 
+        AffinityBehavior affinityBehavior, 
+        AffinityElement element)
     {
         double baseDamage = CalculateBaseDamageForElement(attacker, element);
         int finalDamage = ApplyAffinityModifier(baseDamage, affinityBehavior);
         return finalDamage;
     }
 
-    public static int CalculateFinalDamageForSkill(UnitBase attacker, SkillData skillData, AffinityBehavior affinityBehavior)
+    public static int CalculateFinalDamageForSkill(
+        UnitBase attacker, 
+        SkillData skillData, 
+        AffinityBehavior affinityBehavior)
     {
         var elementType = AffinityMapper.Parse(skillData.Type);
         double baseDamage = CalculateBaseDamageForSkill(attacker, skillData, elementType);
@@ -27,7 +33,10 @@ public static class DamageCalculator
         };
     }
 
-    private static double CalculateBaseDamageForSkill(UnitBase attacker, SkillData skillData, AffinityElement affinityElement)
+    private static double CalculateBaseDamageForSkill(
+        UnitBase attacker, 
+        SkillData skillData, 
+        AffinityElement affinityElement)
     {
         return affinityElement switch
         {
