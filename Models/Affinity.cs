@@ -35,6 +35,4 @@ public class Affinity
     {
         return string.Join(", ", _affinities.Select(pair => $"{pair.Key}:{pair.Value}"));
     }
-    
-    public IReadOnlyDictionary<string, string> All => _affinities;
 }

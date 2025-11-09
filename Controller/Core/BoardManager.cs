@@ -1,4 +1,6 @@
-﻿namespace Shin_Megami_Tensei
+﻿using System.Collections.ObjectModel;
+
+namespace Shin_Megami_Tensei
 {
     public class BoardManager
     {
@@ -47,7 +49,11 @@
             => playerId == 1 ? _board.PlayerOneBoard : _board.PlayerTwoBoard;
 
         public IReadOnlyDictionary<string, UnitBase?> GetBoardForPlayer(int playerId)
-            => SelectMutableBoard(playerId);
+        {
+            var board = SelectMutableBoard(playerId);
+            return new ReadOnlyDictionary<string, UnitBase?>(board);
+        }
+
 
         public UnitBase GetTeamLeaderUnit(int playerId)
             => GetBoardForPlayer(playerId)[GameConstants.BoardPositions[0]]!;

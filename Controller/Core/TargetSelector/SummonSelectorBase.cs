@@ -7,7 +7,7 @@ public abstract class SummonSelectorBase : TargetSelectorBase
     protected SummonSelectorBase(View view, BoardManager boardManager)
         : base(view, boardManager, new SpecialSelectorView(view)) { }
 
-    public sealed override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    protected sealed override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         List<UnitBase> reserveUnits = GetCandidateUnits(currentPlayerId);
         var monsterToSummon = SelectMonsterToSummon(activeUnit, reserveUnits);

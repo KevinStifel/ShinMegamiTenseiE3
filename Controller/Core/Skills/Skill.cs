@@ -15,19 +15,23 @@ public class Skill
         _effect = effect;
         _targetSelector = targetSelector;
     }
-
+    
     public void Apply(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
     {
         var casterUnit = turnManager.GetAttackerOnTurn();
         var skillExecutionContext = new SkillExecutionContext(_skillData, boardManager, turnManager, currentPlayerId);
-        List<UnitBase> targets = _targetSelector.SelectTargets(casterUnit, currentPlayerId, _skillData);
 
-        if (targets.Count == 0)
+        var targetsReadOnly = _targetSelector.SelectTargetsReadOnly(casterUnit, currentPlayerId, _skillData);
+
+        if (targetsReadOnly.Count == 0)
             throw new ActionCanceledException();
 
         boardManager.RegisterPlayerSkillCounter(currentPlayerId);
 
+        var targets = new List<UnitBase>(targetsReadOnly);
         _effect.ApplyEffect(casterUnit, targets, skillExecutionContext);
+
         boardManager.IncrementSkillUseCount(currentPlayerId);
     }
+
 }

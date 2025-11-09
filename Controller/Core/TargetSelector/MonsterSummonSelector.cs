@@ -9,7 +9,7 @@ public sealed class MonsterSummonSelector : TargetSelectorBase
     public MonsterSummonSelector(View view, BoardManager boardManager)
         : base(view, boardManager, new SpecialSelectorView(view)) { }
 
-    public override List<UnitBase> SelectTargets(
+    protected override List<UnitBase> SelectTargets(
         UnitBase activeUnit, 
         int currentPlayerId, 
         SkillData skillData)

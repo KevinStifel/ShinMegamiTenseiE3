@@ -10,7 +10,7 @@ public sealed class MultiEnemySelector : TargetSelectorBase
     {
     }
 
-    public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    protected override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         int enemyPlayerId = currentPlayerId == 1 ? 2 : 1;
         List<UnitBase> aliveEnemies = Board.GetAliveUnits(enemyPlayerId);

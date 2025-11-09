@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Shin_Megami_Tensei_View;
-
-namespace Shin_Megami_Tensei;
+﻿using Shin_Megami_Tensei_View;
+using Shin_Megami_Tensei;
 
 public abstract class TargetSelectorBase
 {
@@ -15,8 +13,13 @@ public abstract class TargetSelectorBase
         Board = boardManager;
         SelectorView = selectorView;
     }
-
-    public abstract List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData);
+    
+    public IReadOnlyList<UnitBase> SelectTargetsReadOnly(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    {
+        var selectedTargets  = SelectTargets(activeUnit, currentPlayerId, skillData);
+        return selectedTargets.ToArray();
+    }
+    protected abstract List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData);
 
     protected int ReadTargetIndex(List<UnitBase> targetList)
         => SelectorView.ReadTargetIndex(targetList.Count);

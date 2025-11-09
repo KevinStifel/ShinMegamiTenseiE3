@@ -10,7 +10,7 @@ public sealed class DeadAllySelector : TargetSelectorBase
     {
     }
 
-    public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    protected override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         List<UnitBase> deadAllies = Board.GetAllDeadUnits(currentPlayerId);
         SelectorView.ShowAvailableTargets(activeUnit, deadAllies);

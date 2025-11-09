@@ -10,7 +10,7 @@ public sealed class EnemySelector : TargetSelectorBase
     {
     }
 
-    public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    protected override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         List<UnitBase> availableEnemies = GetAvailableTargets(currentPlayerId);
         UnitBase selectedTarget = SelectEnemyFromList(activeUnit, availableEnemies);

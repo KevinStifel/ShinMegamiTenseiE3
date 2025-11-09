@@ -10,7 +10,7 @@ public sealed class AllySelector : TargetSelectorBase
     {
     }
 
-    public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    protected override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         List<UnitBase> allies = Board.GetAliveUnits(currentPlayerId);
         SelectorView.ShowAvailableTargets(activeUnit, allies);
