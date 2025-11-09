@@ -19,7 +19,7 @@ public class TurnManager
         => activeUnits.Count(unit => unit.Stats.HP > 0);
 
     private static List<UnitBase> GenerateAttackOrder(List<UnitBase> activeUnits)
-        => activeUnits.OrderByDescending(u => u.Stats.Spd).ToList();
+        => activeUnits.OrderByDescending(unit => unit.Stats.Spd).ToList();
 
     public bool HasAvailableTurns()
         => _currentTurn.FullTurns > 0 || _currentTurn.BlinkingTurns > 0;
@@ -111,7 +111,7 @@ public class TurnManager
         var aliveUnits = boardManager.GetAliveUnits(playerId);
 
         _currentTurn.AttackOrder = _currentTurn.AttackOrder
-            .Where(u => aliveUnits.Contains(u))
+            .Where(unit => aliveUnits.Contains(unit))
             .ToList();
     }
 

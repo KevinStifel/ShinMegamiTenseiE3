@@ -13,8 +13,8 @@ public static class TargetOrderingHelper
             if (boardUnit == null)
                 continue;
 
-            int count = selectedTargets.Count(u => u == boardUnit);
-            for (int i = 0; i < count; i++)
+            int count = selectedTargets.Count(unit => unit == boardUnit);
+            for (int index = 0; index < count; index++)
                 ordered.Add(boardUnit);
         }
 

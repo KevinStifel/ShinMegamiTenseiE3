@@ -6,20 +6,20 @@ public static class AffinityGroupHelper
     {
         var repelGroupEndIndexes = new HashSet<int>();
 
-        for (int i = 0; i < targets.Count; i++)
+        for (int index = 0; index < targets.Count; index++)
         {
-            var currentBehavior = GetAffinityBehavior(targets[i], elementType);
+            var currentBehavior = GetAffinityBehavior(targets[index], elementType);
             bool currentIsRepel = currentBehavior.Type == AffinityType.Repel;
 
             bool nextIsRepel = false;
-            if (i + 1 < targets.Count)
+            if (index + 1 < targets.Count)
             {
-                var nextBehavior = GetAffinityBehavior(targets[i + 1], elementType);
+                var nextBehavior = GetAffinityBehavior(targets[index + 1], elementType);
                 nextIsRepel = nextBehavior.Type == AffinityType.Repel;
             }
 
             if (currentIsRepel && !nextIsRepel)
-                repelGroupEndIndexes.Add(i);
+                repelGroupEndIndexes.Add(index);
         }
 
         return repelGroupEndIndexes;

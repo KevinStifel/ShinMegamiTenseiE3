@@ -14,11 +14,11 @@ public sealed class MassReviveAllySelector : TargetSelectorBase
     public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
     {
         var aliveOnBoard = Board.GetAliveUnits(currentPlayerId)
-            .Where(u => u != activeUnit)
+            .Where(unit => unit != activeUnit)
             .ToList();
 
         var aliveInReserve = Board.GetReserveUnitsForPlayer(currentPlayerId)
-            .Where(u => u.Stats.HP > 0)
+            .Where(unit => unit.Stats.HP > 0)
             .ToList();
 
         var deadAllies = Board.GetAllDeadUnits(currentPlayerId);

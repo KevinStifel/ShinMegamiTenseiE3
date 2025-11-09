@@ -12,7 +12,7 @@ public static class MultiTargetCalculator
 
         int totalAlive = aliveEnemies.Count;
         int startIndex = playerSkillUseCount % totalAlive;
-        int SelectionDirection = GetSelectionDirection(startIndex);
+        int selectionDirection = GetSelectionDirection(startIndex);
 
         List<UnitBase> orderedTargets = [];
         int currentIndex = startIndex;
@@ -20,7 +20,7 @@ public static class MultiTargetCalculator
         for (int hit = 0; hit < totalHits; hit++)
         {
             orderedTargets.Add(aliveEnemies[currentIndex]);
-            currentIndex = GetNextIndex(currentIndex, totalAlive, SelectionDirection);
+            currentIndex = GetNextIndex(currentIndex, totalAlive, selectionDirection);
         }
 
         return orderedTargets;
