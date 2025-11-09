@@ -6,11 +6,11 @@ namespace Shin_Megami_Tensei;
 public sealed class DamageEffect : EffectBase
 {
     private AffinityElement _elementType;
-    private TurnManager _turnManager = null!;
-    private BoardManager _boardManager = null!;
-    private SkillData _skillData = null!;
-    private int _currentPlayerId;
-    private int _enemyPlayerId;
+    private new TurnManager _turnManager = null!;
+    private new BoardManager _boardManager = null!;
+    private new SkillData _skillData = null!;
+    private new int _currentPlayerId;
+    private new int _enemyPlayerId;
 
     public DamageEffect(View view) : base(view) { }
 

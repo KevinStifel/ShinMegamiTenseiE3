@@ -29,8 +29,8 @@ public sealed class SpiritDrainEffect : EffectBase
         var turnChange = ApplyTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
-            
-    private void InitializeEffect(SkillExecutionContext context)
+
+    protected override void InitializeEffect(SkillExecutionContext context)
     {
         _turnManager = context.TurnManager;
         _boardManager = context.BoardManager;

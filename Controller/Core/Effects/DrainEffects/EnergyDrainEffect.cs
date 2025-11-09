@@ -31,7 +31,7 @@ public sealed class EnergyDrainEffect : EffectBase
         ActionView.ShowTurnConsumption(turnChange);
     }
 
-    private void InitializeEffect(SkillExecutionContext context)
+    protected override void InitializeEffect(SkillExecutionContext context)
     {
         _turnManager = context.TurnManager;
         _boardManager = context.BoardManager;
