@@ -9,7 +9,10 @@ public sealed class MonsterSummonSelector : TargetSelectorBase
     public MonsterSummonSelector(View view, BoardManager boardManager)
         : base(view, boardManager, new SpecialSelectorView(view)) { }
 
-    public override List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData)
+    public override List<UnitBase> SelectTargets(
+        UnitBase activeUnit, 
+        int currentPlayerId, 
+        SkillData skillData)
     {
         List<UnitBase> availableMonsters = GetAvailableReserveMonsters(currentPlayerId);
         ShowSummonableMonsters(activeUnit, availableMonsters);
@@ -41,7 +44,10 @@ public sealed class MonsterSummonSelector : TargetSelectorBase
         return monsters[selectedIndex];
     }
 
-    private void PrepareSummonInformation(int currentPlayerId, UnitBase monsterToSummon, UnitBase activeUnit)
+    private void PrepareSummonInformation(
+        int currentPlayerId, 
+        UnitBase monsterToSummon, 
+        UnitBase activeUnit)
     {
         string summonerPosition = GetSummonerBoardPosition(currentPlayerId, activeUnit);
         var summonSlot = (Position: summonerPosition, Replaced: (UnitBase?)activeUnit);
@@ -51,10 +57,11 @@ public sealed class MonsterSummonSelector : TargetSelectorBase
     private string GetSummonerBoardPosition(int currentPlayerId, UnitBase activeUnit)
     {
         var playerBoard = Board.SelectMutableBoard(currentPlayerId);
-        var boardSlot = playerBoard.First(slot => ReferenceEquals(slot.Value, activeUnit));
+        
+        var boardSlot = playerBoard.First(slot => 
+            ReferenceEquals(slot.Value, activeUnit));
 
         string positionKey = boardSlot.Key;
         return positionKey;
     }
-
 }
