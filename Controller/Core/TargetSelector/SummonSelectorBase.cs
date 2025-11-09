@@ -35,10 +35,11 @@ public abstract class SummonSelectorBase : TargetSelectorBase
     private List<(string Position, UnitBase? Occupant)> GetSummonOptions(int currentPlayerId)
     {
         var playerBoard = Board.SelectMutableBoard(currentPlayerId);
-        return GameConstants.BoardPositions
-            .Skip(1)
-            .Select(position => (Position: position, Occupant: playerBoard[position]))
-            .ToList();
+        var summonablePositions = GameConstants.BoardPositions.Skip(1);
+        var summonOptions = summonablePositions.Select(position => 
+            (Position: position, Occupant: playerBoard[position]));
+
+        return summonOptions.ToList();
     }
 
     private (string Position, UnitBase? Occupant) SelectSummonPosition(

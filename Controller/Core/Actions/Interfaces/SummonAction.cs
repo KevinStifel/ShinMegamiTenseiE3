@@ -62,14 +62,16 @@ public sealed class SummonAction : CombatActionBase
         return summonEffect.ApplyMonsterSummon(summonData, boardFormation);
     }
 
-    private static List<(string BoardPosition, UnitBase? DisplacedUnit)> GetSummonPositions(Dictionary<string, UnitBase?> playerBoard)
+    private static List<(string BoardPosition, UnitBase? DisplacedUnit)> GetSummonPositions(
+        Dictionary<string, UnitBase?> playerBoard)
     {
-        return GameConstants.BoardPositions
-            .Skip(1)
-            .Select(position => (BoardPosition: position, DisplacedUnit: playerBoard[position]))
-            .ToList();
+        var summonablePositions = GameConstants.BoardPositions.Skip(1);
+        var summonSlots = summonablePositions.Select(position =>
+            (BoardPosition: position, DisplacedUnit: playerBoard[position]));
+        
+        return summonSlots.ToList();
     }
-
+    
     private void UpdateTurnAndOrder(TurnManager turnManager, SummonData summonData, UnitBase? displacedUnit)
     {
         turnManager.UpdateOrderAfterSummon(summonData.Summoner, summonData.MonsterToSummon, displacedUnit);

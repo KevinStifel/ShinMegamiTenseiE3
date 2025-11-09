@@ -45,10 +45,13 @@ public class TeamValidator
 
     private bool HasUniqueUnitNames(List<TeamUnitRaw> teamUnits)
     {
-        return teamUnits
-            .Select(unit => unit.Name)
-            .Distinct()
-            .Count() == teamUnits.Count;
+        var unitNames = teamUnits.Select(unit => unit.Name);
+        var distinctUnitNames = unitNames.Distinct();
+
+        int distinctCount = distinctUnitNames.Count();
+        int totalCount = teamUnits.Count;
+
+        return distinctCount == totalCount;
     }
 
     private bool IsWithinSamuraiSkillLimit(List<TeamUnitRaw> teamUnits)

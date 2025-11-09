@@ -55,8 +55,15 @@
         public List<UnitBase> GetReserveUnitsForPlayer(int playerId)
         {
             var roster = GetRoster(playerId);
-            var boardUnits = GetBoardForPlayer(playerId).Values.Where(u => u != null).ToHashSet();
-            return roster.Where(unit => !boardUnits.Contains(unit)).ToList();
+
+            var playerBoard = GetBoardForPlayer(playerId);
+            var allBoardSlots = playerBoard.Values;
+            var unitsOnBoard = allBoardSlots.OfType<UnitBase>();
+            var boardUnits = unitsOnBoard.ToHashSet();
+
+            var unitsInReserve = roster.Where(unit => !boardUnits.Contains(unit));
+    
+            return unitsInReserve.ToList();
         }
         public List<UnitBase> GetAliveReserveUnitsForPlayer(int playerId)
         {
@@ -67,11 +74,11 @@
         
         public List<UnitBase> GetAliveUnits(int playerId)
         {
-            return GetBoardForPlayer(playerId)
-                .Values
-                .Where(unit => unit is { Stats.HP: > 0 })
-                .Cast<UnitBase>()
-                .ToList();
+            var allBoardSlots = GetBoardForPlayer(playerId).Values;
+            var unitsOnBoard = allBoardSlots.OfType<UnitBase>();
+            var aliveUnits = unitsOnBoard.Where(unit => unit.Stats.HP > 0);
+
+            return aliveUnits.ToList();
         }
         public List<UnitBase> GetAllDeadUnits(int playerId)
         {
