@@ -14,13 +14,12 @@ public sealed class EnergyDrainEffect : EffectBase
 
     public EnergyDrainEffect(View view) : base(view) { }
 
-    public override void ApplyEffect(UnitBase caster, List<UnitBase> targets, SkillExecutionContext context)
+    public override void ApplyEffect(
+        UnitBase caster, 
+        List<UnitBase> targets, 
+        SkillExecutionContext context)
     {
-        _turnManager = context.TurnManager;
-        _boardManager = context.BoardManager;
-        _skillData = context.SkillData;
-        _currentPlayerId = context.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
+        InitializeEffect(context);
 
         var affinityBehavior = GetAffinityBehavior(caster, _elementType);
         caster.Stats.UseMP(_skillData.Cost);
@@ -28,26 +27,51 @@ public sealed class EnergyDrainEffect : EffectBase
         foreach (var target in targets)
             ApplyEnergyDrain(caster, target);
         
-        var turnChange = _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
+        var turnChange = ApplyTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
 
+    private void InitializeEffect(SkillExecutionContext context)
+    {
+        _turnManager = context.TurnManager;
+        _boardManager = context.BoardManager;
+        _skillData = context.SkillData;
+        _currentPlayerId = context.CurrentPlayerId;
+        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
+    }
 
     private void ApplyEnergyDrain(UnitBase caster, UnitBase target)
     {
-        int baseDrain = (int)Math.Sqrt(caster.Stats.Mag * _skillData.Power);
-        int actualHpDrain = Math.Min(target.Stats.HP, baseDrain);
-        int actualMpDrain = Math.Min(target.Stats.MP, baseDrain);
-
-        target.Stats.TakeDamage(actualHpDrain);
-        caster.Stats.Heal(actualHpDrain);
-
-        target.Stats.UseMP(actualMpDrain);
-        caster.Stats.RestoreMP(actualMpDrain);
+        (int hpDrain, int mpDrain) = DrainCalculator.CalculateEnergyDrain(
+            caster, target, _skillData);
         
-        EffectView.ShowHpMpDrainEffect(caster, target, actualHpDrain, actualMpDrain);
+        ApplyDrainToStats(caster, target, hpDrain, mpDrain);
+        
+        EffectView.ShowHpMpDrainEffect(caster, target, hpDrain, mpDrain);
+        HandleDeath(target);
+    }
 
+    private static void ApplyDrainToStats(
+        UnitBase caster, 
+        UnitBase target, 
+        int hpDrain, 
+        int mpDrain)
+    {
+        target.Stats.TakeDamage(hpDrain);
+        caster.Stats.Heal(hpDrain);
+
+        target.Stats.UseMP(mpDrain);
+        caster.Stats.RestoreMP(mpDrain);
+    }
+
+    private void HandleDeath(UnitBase target)
+    {
         if (target.Stats.HP == 0)
             _boardManager.HandleUnitDeath(_enemyPlayerId, target);
+    }
+
+    private TurnChange ApplyTurnEffect(AffinityBehavior affinityBehavior)
+    {
+        return _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
     }
 }
