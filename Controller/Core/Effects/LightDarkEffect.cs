@@ -1,58 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Shin_Megami_Tensei_View;
 
 namespace Shin_Megami_Tensei;
 
 public sealed class LightDarkEffect : EffectBase
 {
-    private TurnManager _turnManager = null!;
-    private BoardManager _boardManager = null!;
-    private SkillData _skillData = null!;
-    private int _currentPlayerId;
-    private int _enemyPlayerId;
     private AffinityElement _elementType;
 
     public LightDarkEffect(View view) : base(view) { }
 
-    public override void ApplyEffect(UnitBase casterUnit, List<UnitBase> targets, SkillExecutionContext context)
+    public override void ApplyEffect(
+        UnitBase casterUnit, 
+        List<UnitBase> targets, 
+        SkillExecutionContext context)
     {
-        _turnManager = context.TurnManager;
-        _boardManager = context.BoardManager;
-        _skillData = context.SkillData;
-        _currentPlayerId = context.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
+        base.InitializeEffect(context);
         _elementType = AffinityMapper.Parse(_skillData.Type);
         
         foreach (var target in targets)
             ApplyLightDarkToTarget(casterUnit, target);
 
-        var topAffinity = AffinityPriorityHelper.GetTopPriorityReaction(targets, _elementType);
-        Console.WriteLine($"[DEBUG] Top Affinity: {topAffinity}");
-
-        var topBehavior = AffinityBehaviorFactory.Create(topAffinity);
-        ApplyTurnChange(topBehavior);
-        casterUnit.Stats.UseMP(_skillData.Cost);
+        ApplyAffinityTurnCost(targets);
+        ApplyMpCost(casterUnit);
     }
 
     private void ApplyLightDarkToTarget(UnitBase caster, UnitBase target)
     {
         var affinityBehavior = GetAffinityBehavior(target, _elementType);
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
+        
         affinityBehavior.ApplyLightDarkEffect(caster, target, _skillData);
+        
         affinityView.ShowLightDarkReaction(caster, target, _skillData);
         EffectView.ShowHpStatus(target);
 
-        if (target.Stats.HP == 0)
+        HandleDeath(target);
+    }
+
+    private void HandleDeath(UnitBase target)
+    {
+        bool isTargetDead = target.Stats.HP == 0;
+        if (isTargetDead)
         {
             _boardManager.HandleUnitDeath(_enemyPlayerId, target);
         }
-
     }
 
-    private void ApplyTurnChange(AffinityBehavior behavior)
+    private void ApplyAffinityTurnCost(List<UnitBase> targets)
     {
-        var turnChange = _turnManager.ApplyAffinityTurnEffect(behavior);
+        var topAffinity = AffinityPriorityHelper.GetTopPriorityReaction(targets, _elementType);
+        var topBehavior = AffinityBehaviorFactory.Create(topAffinity);
+        
+        var turnChange = _turnManager.ApplyAffinityTurnEffect(topBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
 }

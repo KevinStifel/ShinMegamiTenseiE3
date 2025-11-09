@@ -11,25 +11,30 @@ public sealed class InvitationEffect : EffectBase
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
     {
-        var boardManager = skillExecutionContext.BoardManager;
-        var turnManager = skillExecutionContext.TurnManager;
-        int currentPlayerId = skillExecutionContext.CurrentPlayerId;
-
+        base.InitializeEffect(skillExecutionContext);
+        
         var monsterToSummon = targets[0];
-        var (summonPosition, replacedUnit) = boardManager.GetPreparedSummonData(currentPlayerId);
-
-        var playerBoard = boardManager.SelectMutableBoard(currentPlayerId);
-        var reserveUnits = boardManager.GetReserveUnitsForPlayer(currentPlayerId);
-
-        PlaceMonsterOnBoard(playerBoard, summonPosition, monsterToSummon);
-        UpdateReserveList(reserveUnits, monsterToSummon, replacedUnit);
+        var (replacedUnit, summonPosition) = PerformBoardUpdate(monsterToSummon);
 
         HandleSummonResult(casterUnit, monsterToSummon);
 
-        turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
-        ApplyNeutralTurnChange(turnManager);
-        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
+        UpdateTurnOrder(casterUnit, monsterToSummon, replacedUnit);
+        ApplyTurnCost();
+        ApplyMpCost(casterUnit);
     }
+
+    private (UnitBase? ReplacedUnit, string Position) PerformBoardUpdate(UnitBase monsterToSummon)
+    {
+        var (summonPosition, replacedUnit) = _boardManager.GetPreparedSummonData(_currentPlayerId);
+        var playerBoard = _boardManager.SelectMutableBoard(_currentPlayerId);
+        var reserveUnits = _boardManager.GetReserveUnitsForPlayer(_currentPlayerId);
+
+        PlaceMonsterOnBoard(playerBoard, summonPosition, monsterToSummon);
+        UpdateReserveList(reserveUnits, monsterToSummon, replacedUnit);
+        
+        return (replacedUnit, summonPosition);
+    }
+    
     private static void PlaceMonsterOnBoard(
         Dictionary<string, UnitBase?> playerBoard,
         string summonPosition,
@@ -65,5 +70,13 @@ public sealed class InvitationEffect : EffectBase
         int healAmount = monsterToSummon.Stats.MaxHP;
         monsterToSummon.Stats.Heal(healAmount);
         EffectView.ShowSummonAndReviveEffect(casterUnit, monsterToSummon, healAmount);
+    }
+
+    private void UpdateTurnOrder(
+        UnitBase casterUnit, 
+        UnitBase monsterToSummon, 
+        UnitBase? replacedUnit)
+    {
+        _turnManager.UpdateOrderAfterSummon(casterUnit, monsterToSummon, replacedUnit);
     }
 }

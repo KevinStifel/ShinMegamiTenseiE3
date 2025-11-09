@@ -11,14 +11,30 @@ public sealed class HealEffect : EffectBase
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
     { 
+        base.InitializeEffect(skillExecutionContext);
+        
         EffectView.ShowSeparator();
+        ApplyHealToTargets(casterUnit, targets, _skillData);
+        
+        ApplyTurnCost();
+        ApplyMpCost(casterUnit);
+    }
+
+    private void ApplyHealToTargets(
+        UnitBase casterUnit, 
+        List<UnitBase> targets, 
+        SkillData skillData)
+    {
         foreach (var targetUnit in targets)
         {
-            int healAmount = HealCalculator.CalculateHealAmount(targetUnit, skillExecutionContext.SkillData);
-            targetUnit.Stats.Heal(healAmount);
-            EffectView.ShowHealEffect(casterUnit, targetUnit, healAmount);
+            ApplyHealToTarget(casterUnit, targetUnit, skillData);
         }
-        ApplyNeutralTurnChange(skillExecutionContext.TurnManager);
-        casterUnit.Stats.UseMP(skillExecutionContext.SkillData.Cost);
+    }
+
+    private void ApplyHealToTarget(UnitBase caster, UnitBase target, SkillData skillData)
+    {
+        int healAmount = HealCalculator.CalculateHealAmount(target, skillData);
+        target.Stats.Heal(healAmount);
+        EffectView.ShowHealEffect(caster, target, healAmount);
     }
 }
