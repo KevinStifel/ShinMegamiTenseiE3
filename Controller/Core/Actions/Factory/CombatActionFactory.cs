@@ -21,7 +21,7 @@ namespace Shin_Megami_Tensei
                 "surrender" => new SurrenderAction(_view),
                 "pass" => new PassTurnAction(_view),
                 "summon" => new SummonAction(_view),
-                _ => throw new ArgumentException("Opción de acción no válida")
+                _ => throw new InvalidActionOptionException("Opción de acción no válida")
             };
         }
     }

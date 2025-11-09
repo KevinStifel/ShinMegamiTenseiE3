@@ -16,8 +16,10 @@ public abstract class EffectBase
         ActionView = new CombatActionView(view);
     }
 
-    public abstract void ApplyEffect(UnitBase casterUnit, List<UnitBase> targets, SkillExecutionContext skillExecutionContext);
-    protected void ApplyNeutralTurnChange(TurnManager turnManager)
+    public abstract void ApplyEffect(
+        UnitBase casterUnit, 
+        List<UnitBase> targets, 
+        SkillExecutionContext skillExecutionContext);    protected void ApplyNeutralTurnChange(TurnManager turnManager)
     {
         var turnChange = turnManager.ConsumeNeutralTurn();
         ActionView.ShowTurnConsumption(turnChange);

@@ -8,7 +8,10 @@ public sealed class SummonEffect : EffectBase
 {
     public SummonEffect(View view) : base(view) { }
 
-    public UnitBase? ApplySamuraiSummon(UnitBase monsterToSummon, PlayerBoardFormation formation, SummonPlacement summonPlacement)
+    public UnitBase? ApplySamuraiSummon(
+        UnitBase monsterToSummon, 
+        PlayerBoardFormation formation, 
+        SummonPlacement summonPlacement)
     {
         formation.ActiveBoard[summonPlacement.BoardPosition] = monsterToSummon;
         formation.ReserveUnits.Remove(monsterToSummon);
@@ -21,9 +24,12 @@ public sealed class SummonEffect : EffectBase
         return summonPlacement.ReplacedUnit;
     }
 
-    public UnitBase ApplyMonsterSummon(SummonData summonData, PlayerBoardFormation playerBoardFormation)
+    public UnitBase ApplyMonsterSummon(
+        SummonData summonData, 
+        PlayerBoardFormation playerBoardFormation)
     {
-        string summonerPosition = GetSummonerBoardPosition(playerBoardFormation, summonData.Summoner);
+        string summonerPosition = GetSummonerBoardPosition(
+            playerBoardFormation, summonData.Summoner);
 
         playerBoardFormation.ActiveBoard[summonerPosition] = summonData.MonsterToSummon;
         playerBoardFormation.ReserveUnits.Remove(summonData.MonsterToSummon);
@@ -33,14 +39,21 @@ public sealed class SummonEffect : EffectBase
         return summonData.Summoner;
     }
 
-    private static string GetSummonerBoardPosition(PlayerBoardFormation playerBoardFormation, UnitBase summoner)
+    private static string GetSummonerBoardPosition(
+        PlayerBoardFormation playerBoardFormation, 
+        UnitBase summoner)
     {
-        var boardSlot = playerBoardFormation.ActiveBoard.First(slot => ReferenceEquals(slot.Value, summoner));
+        var boardSlot = playerBoardFormation.ActiveBoard.First(slot => 
+            ReferenceEquals(slot.Value, summoner));
+        
         string positionKey = boardSlot.Key;
         return positionKey;
     }
 
-    public override void ApplyEffect(UnitBase casterUnit, List<UnitBase> targets, SkillExecutionContext skillExecutionContext)
+    public override void ApplyEffect(
+        UnitBase casterUnit, 
+        List<UnitBase> targets, 
+        SkillExecutionContext skillExecutionContext)
     {
     }
 }

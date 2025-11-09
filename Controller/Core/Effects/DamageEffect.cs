@@ -21,12 +21,14 @@ public sealed class DamageEffect : EffectBase
     {
         InitializeEffect(skillExecutionContext);
 
-        string topPriorityAffinityReaction = AffinityPriorityHelper.GetTopPriorityReaction(targetEnemyUnits, _elementType);
-        var repelGroupEndIndexes = AffinityGroupHelper.GetLastIndexesOfRepelGroups(targetEnemyUnits, _elementType);
+        string topPriorityReaction =
+            AffinityPriorityHelper.GetTopPriorityReaction(targetEnemyUnits, _elementType);
+        var repelGroupEndIndexes =
+            AffinityGroupHelper.GetLastIndexesOfRepelGroups(targetEnemyUnits, _elementType);
 
         ProcessDamageHits(casterUnit, targetEnemyUnits, repelGroupEndIndexes);
         
-        var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityAffinityReaction);
+        var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityReaction);
         ApplyTurnChange(topAffinityBehavior);
         casterUnit.Stats.UseMP(_skillData.Cost);
     }
@@ -41,7 +43,10 @@ public sealed class DamageEffect : EffectBase
         _elementType = AffinityMapper.Parse(_skillData.Type);
     }
 
-    private void ProcessDamageHits(UnitBase casterUnit, List<UnitBase> targetEnemyUnits, HashSet<int> repelGroupEndIndexes)
+    private void ProcessDamageHits(
+        UnitBase casterUnit,
+        List<UnitBase> targetEnemyUnits,
+        HashSet<int> repelGroupEndIndexes)
     {
         UnitBase? previousTarget = null;
         int totalHits = targetEnemyUnits.Count;
@@ -67,7 +72,10 @@ public sealed class DamageEffect : EffectBase
         }
     }
 
-    private void HandlePreviousTargetDisplay(UnitBase casterUnit, UnitBase? previousTarget, UnitBase currentTargetUnit)
+    private void HandlePreviousTargetDisplay(
+        UnitBase casterUnit,
+        UnitBase? previousTarget,
+        UnitBase currentTargetUnit)
     {
         if (HasTargetChanged(previousTarget, currentTargetUnit))
         {
@@ -98,7 +106,9 @@ public sealed class DamageEffect : EffectBase
     {
         var affinityBehavior = GetAffinityBehavior(targetUnit, _elementType);
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
-        int inflictedDamage = DamageCalculator.CalculateFinalDamageForSkill(casterUnit, _skillData, affinityBehavior);
+        
+        int inflictedDamage = DamageCalculator.CalculateFinalDamageForSkill(
+            casterUnit, _skillData, affinityBehavior);
 
         affinityBehavior.ApplyEffect(casterUnit, targetUnit, inflictedDamage);
         affinityView.ShowAffinityReaction(casterUnit, targetUnit, inflictedDamage);
@@ -106,7 +116,8 @@ public sealed class DamageEffect : EffectBase
 
     private static bool HasTargetChanged(UnitBase? previousTarget, UnitBase currentTarget)
     {
-        return previousTarget is not null && previousTarget != currentTarget;    }
+        return previousTarget is not null && previousTarget != currentTarget;
+    }
 
     private void ShowHp(UnitBase casterUnit, UnitBase target)
     {
