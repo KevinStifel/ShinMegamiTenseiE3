@@ -12,7 +12,7 @@ public abstract class TargetSelectorViewBase
         View = view;
     }
 
-    public abstract void ShowAvailableTargets(UnitBase casterUnit, List<UnitBase> candidates);
+    public abstract void ShowAvailableTargets(UnitBase casterUnit, List<UnitBase> targetList);
 
     public int ReadTargetIndex(int totalOptions)
     {
@@ -23,19 +23,19 @@ public abstract class TargetSelectorViewBase
     {
         View.WriteLine("----------------------------------------");
     }
-    protected void ShowTargetList(string title, List<UnitBase> candidates)
+    protected void ShowTargetList(string headerText, List<UnitBase> targetList)
     {
         View.WriteLine("----------------------------------------");
-        View.WriteLine(title);
+        View.WriteLine(headerText);
 
-        for (int index = 0; index < candidates.Count; index++)
+        for (int index = 0; index < targetList.Count; index++)
         {
-            var unit = candidates[index];
+            var unit = targetList[index];
             string unitDetails = FormatUnitDetails(unit);
             View.WriteLine($"{index + 1}-{unitDetails}");
         }
 
-        View.WriteLine($"{candidates.Count + 1}-Cancelar");
+        View.WriteLine($"{targetList.Count + 1}-Cancelar");
     }
 
     protected virtual string FormatUnitDetails(UnitBase unit)

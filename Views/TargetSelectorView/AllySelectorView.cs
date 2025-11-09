@@ -9,7 +9,7 @@ public sealed class AllySelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase attackerUnit, List<UnitBase> allies)
     {
-        string title = $"Seleccione un objetivo para {attackerUnit.Name}";
-        ShowTargetList(title, allies);
+        string headerText = $"Seleccione un objetivo para {attackerUnit.Name}";
+        ShowTargetList(headerText, allies);
     }
 }

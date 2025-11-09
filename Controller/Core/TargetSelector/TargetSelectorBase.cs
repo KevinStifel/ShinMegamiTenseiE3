@@ -18,8 +18,8 @@ public abstract class TargetSelectorBase
 
     public abstract List<UnitBase> SelectTargets(UnitBase activeUnit, int currentPlayerId, SkillData skillData);
 
-    protected int ReadTargetIndex(List<UnitBase> candidates)
-        => SelectorView.ReadTargetIndex(candidates.Count);
+    protected int ReadTargetIndex(List<UnitBase> targetList)
+        => SelectorView.ReadTargetIndex(targetList.Count);
 
     protected static bool IsSelectionCanceled(int index)
         => index < 0;

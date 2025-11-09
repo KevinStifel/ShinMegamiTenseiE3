@@ -9,7 +9,7 @@ public sealed class SummonSelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase summonerUnit, List<UnitBase> reserveMonsters)
     {
-        string title = "Seleccione un monstruo para invocar";
-        ShowTargetList(title, reserveMonsters);
+        string headerText = "Seleccione un monstruo para invocar";
+        ShowTargetList(headerText, reserveMonsters);
     }
 }

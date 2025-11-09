@@ -9,8 +9,8 @@ public sealed class DeadAllySelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase attackerUnit, List<UnitBase> deadAllies)
     {
-        string title = $"Seleccione un objetivo para {attackerUnit.Name}";
-        ShowTargetList(title, deadAllies);
+        string headerText = $"Seleccione un objetivo para {attackerUnit.Name}";
+        ShowTargetList(headerText, deadAllies);
     }
     protected override string FormatUnitDetails(UnitBase unit)
     {

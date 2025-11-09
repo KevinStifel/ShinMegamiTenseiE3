@@ -10,8 +10,8 @@ public sealed class SpecialSelectorView : TargetSelectorViewBase
 
     public override void ShowAvailableTargets(UnitBase summonerUnit, List<UnitBase> summonableMonsters)
     {
-        string title = "Seleccione un monstruo para invocar";
-        ShowTargetList(title, summonableMonsters);
+        string headerText = "Seleccione un monstruo para invocar";
+        ShowTargetList(headerText, summonableMonsters);
     }
 
     public void ShowSummonPositions(List<(string Position, UnitBase? currentUnitAtPosition)> summonOptions)
