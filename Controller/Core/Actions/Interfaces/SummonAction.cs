@@ -8,6 +8,16 @@ public sealed class SummonAction : CombatActionBase
 
     public override void ExecuteAction(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
     {
+        var (summonData, displacedUnit) = PerformSummon(currentPlayerId, boardManager, turnManager);
+        
+        UpdateTurnOrder(turnManager, summonData, displacedUnit);
+        
+        var turnChange = ConsumeTurn(turnManager);
+        ActionView.ShowTurnConsumption(turnChange);
+    }
+
+    private (SummonData SummonData, UnitBase? DisplacedUnit) PerformSummon(int currentPlayerId, BoardManager boardManager, TurnManager turnManager)
+    {
         var summonerUnit = turnManager.GetAttackerOnTurn();
         var summonEffect = new SummonEffect(View);
 
@@ -16,7 +26,8 @@ public sealed class SummonAction : CombatActionBase
         var summonData = new SummonData(summonerUnit, monsterToSummon);
 
         var displacedUnit = GetDisplacedUnit(summonData, summonEffect, boardFormation);
-        UpdateTurnAndOrder(turnManager, summonData, displacedUnit);
+
+        return (summonData, displacedUnit);
     }
 
     private UnitBase GetSelectedMonsterToSummon(BoardManager boardManager, int currentPlayerId)
@@ -72,10 +83,13 @@ public sealed class SummonAction : CombatActionBase
         return summonSlots.ToList();
     }
     
-    private void UpdateTurnAndOrder(TurnManager turnManager, SummonData summonData, UnitBase? displacedUnit)
+    private static void UpdateTurnOrder(TurnManager turnManager, SummonData summonData, UnitBase? displacedUnit)
     {
         turnManager.UpdateOrderAfterSummon(summonData.Summoner, summonData.MonsterToSummon, displacedUnit);
-        var turnChange = turnManager.ConsumeSummonTurn();
-        ActionView.ShowTurnConsumption(turnChange);
+    }
+
+    private static TurnChange ConsumeTurn(TurnManager turnManager)
+    {
+        return turnManager.ConsumeSummonTurn();
     }
 }
