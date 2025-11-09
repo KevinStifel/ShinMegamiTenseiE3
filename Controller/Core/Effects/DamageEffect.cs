@@ -19,56 +19,79 @@ public sealed class DamageEffect : EffectBase
         List<UnitBase> targetEnemyUnits,
         SkillExecutionContext skillExecutionContext)
     {
-        _turnManager = skillExecutionContext.TurnManager;
-        _boardManager = skillExecutionContext.BoardManager;
-        _skillData = skillExecutionContext.SkillData;
-        _currentPlayerId = skillExecutionContext.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
-        _elementType = AffinityMapper.Parse(_skillData.Type);
+        InitializeEffect(skillExecutionContext);
 
-        UnitBase? previousTarget = null;
         string topPriorityAffinityReaction = AffinityPriorityHelper.GetTopPriorityReaction(targetEnemyUnits, _elementType);
-
         var repelGroupEndIndexes = AffinityGroupHelper.GetLastIndexesOfRepelGroups(targetEnemyUnits, _elementType);
 
-        for (int index = 0; index < targetEnemyUnits.Count; index++)
-        {
-            var currentTargetUnit = targetEnemyUnits[index];
-
-            // ANALIZAR CADENA DOBLE IF --- Solución:
-            if (previousTarget != null && HasTargetChanged(previousTarget, currentTargetUnit))
-            {
-                var previousAffinityBehavior = GetAffinityBehavior(previousTarget, _elementType);
-                
-                if (HasTargetChanged(previousTarget, currentTargetUnit) &&
-                    previousAffinityBehavior.ShouldShowHpAfterAttack())
-                {
-                    ShowHp(casterUnit, previousTarget!);
-                }
-            }
-
-            ApplyDamageToTarget(casterUnit, currentTargetUnit);
-            HandleDeaths(casterUnit, currentTargetUnit);
-
-            bool isLastHit = index == targetEnemyUnits.Count - 1;
-            bool isEndOfRepelGroup = repelGroupEndIndexes.Contains(index);
-
-            if (isEndOfRepelGroup)
-                ShowHp(casterUnit, casterUnit);
-
-            if (isLastHit)
-            {
-                var currentBehavior = GetAffinityBehavior(currentTargetUnit, _elementType);
-                if (currentBehavior.ShouldShowHpAfterAttack())
-                    ShowHp(casterUnit, currentTargetUnit);
-            }
-
-            previousTarget = currentTargetUnit;
-        }
+        ProcessDamageHits(casterUnit, targetEnemyUnits, repelGroupEndIndexes);
         
         var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityAffinityReaction);
         ApplyTurnChange(topAffinityBehavior);
         casterUnit.Stats.UseMP(_skillData.Cost);
+    }
+
+    private void InitializeEffect(SkillExecutionContext context)
+    {
+        _turnManager = context.TurnManager;
+        _boardManager = context.BoardManager;
+        _skillData = context.SkillData;
+        _currentPlayerId = context.CurrentPlayerId;
+        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
+        _elementType = AffinityMapper.Parse(_skillData.Type);
+    }
+
+    private void ProcessDamageHits(UnitBase casterUnit, List<UnitBase> targetEnemyUnits, HashSet<int> repelGroupEndIndexes)
+    {
+        UnitBase? previousTarget = null;
+        int totalHits = targetEnemyUnits.Count;
+
+        for (int index = 0; index < totalHits; index++)
+        {
+            var currentTargetUnit = targetEnemyUnits[index];
+
+            HandlePreviousTargetDisplay(casterUnit, previousTarget, currentTargetUnit);
+
+            ApplyDamageToTarget(casterUnit, currentTargetUnit);
+            HandleDeaths(casterUnit, currentTargetUnit);
+
+            HandleRepelGroupDisplay(casterUnit, repelGroupEndIndexes, index);
+
+            bool isLastHit = index == totalHits - 1;
+            if (isLastHit)
+            {
+                HandleLastHitDisplay(casterUnit, currentTargetUnit);
+            }
+
+            previousTarget = currentTargetUnit;
+        }
+    }
+
+    private void HandlePreviousTargetDisplay(UnitBase casterUnit, UnitBase? previousTarget, UnitBase currentTargetUnit)
+    {
+        if (HasTargetChanged(previousTarget, currentTargetUnit))
+        {
+            var previousAffinityBehavior = GetAffinityBehavior(previousTarget!, _elementType);
+        
+            if (previousAffinityBehavior.ShouldShowHpAfterAttack())
+            {
+                ShowHp(casterUnit, previousTarget!);
+            }
+        }
+    }
+
+    private void HandleRepelGroupDisplay(UnitBase casterUnit, HashSet<int> repelGroupEndIndexes, int index)
+    {
+        bool isEndOfRepelGroup = repelGroupEndIndexes.Contains(index);
+        if (isEndOfRepelGroup)
+            ShowHp(casterUnit, casterUnit);
+    }
+
+    private void HandleLastHitDisplay(UnitBase casterUnit, UnitBase currentTargetUnit)
+    {
+        var currentBehavior = GetAffinityBehavior(currentTargetUnit, _elementType);
+        if (currentBehavior.ShouldShowHpAfterAttack())
+            ShowHp(casterUnit, currentTargetUnit);
     }
 
     private void ApplyDamageToTarget(UnitBase casterUnit, UnitBase targetUnit)
@@ -83,8 +106,7 @@ public sealed class DamageEffect : EffectBase
 
     private static bool HasTargetChanged(UnitBase? previousTarget, UnitBase currentTarget)
     {
-        return previousTarget != null && previousTarget != currentTarget;
-    }
+        return previousTarget is not null && previousTarget != currentTarget;    }
 
     private void ShowHp(UnitBase casterUnit, UnitBase target)
     {
