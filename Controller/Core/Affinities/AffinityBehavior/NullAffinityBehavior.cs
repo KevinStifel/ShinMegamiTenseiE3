@@ -23,7 +23,6 @@ public sealed class NullAffinityBehavior : AffinityBehavior
     
     public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        // Siempre bloquea
     }
 
 }

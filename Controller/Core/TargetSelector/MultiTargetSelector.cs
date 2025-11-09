@@ -28,28 +28,7 @@ public sealed class MultiEnemySelector : TargetSelectorBase
             selectedTargets,
             Board.GetBoardForPlayer(enemyPlayerId)
         );
-        /*
-        // DEBUG
-        Console.WriteLine("===== DEBUG MultiTarget Order =====");
-        Console.WriteLine("SelectedTargets (orden original del algoritmo):");
-        foreach (var unit in selectedTargets)
-        {
-            Console.WriteLine($" - {unit.Name}");
-        }
-
-        Console.WriteLine("\nBoard actual (izq -> der):");
-        foreach (var kv in Board.GetBoardForPlayer(enemyPlayerId))
-        {
-            Console.WriteLine($" {kv.Key}: {kv.Value?.Name ?? "(vacío)"}");
-        }
-
-        Console.WriteLine("\nOrderedByBoard (orden final para imprimir):");
-        foreach (var unit in orderedByBoard)
-        {
-            Console.WriteLine($" - {unit.Name}");
-        }
-        Console.WriteLine("=====================================\n");
-        */
+        
         SelectorView.ShowSeparator();
         return orderedByBoard;
     }

@@ -18,7 +18,6 @@ public static class AffinityGroupHelper
                 nextIsRepel = nextBehavior.Type == AffinityType.Repel;
             }
 
-            // si este es repel y el siguiente no, termina un grupo
             if (currentIsRepel && !nextIsRepel)
                 repelGroupEndIndexes.Add(i);
         }
