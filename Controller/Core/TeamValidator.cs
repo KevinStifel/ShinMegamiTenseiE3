@@ -13,11 +13,12 @@ public class TeamValidator
 
     public bool AreRawTeamsValid(List<TeamUnitRaw> playerOneRawTeam, List<TeamUnitRaw> playerTwoRawTeam)
     {
-        if (IsTeamValid(playerOneRawTeam) && IsTeamValid(playerTwoRawTeam))
-            return true;
+        return IsTeamValid(playerOneRawTeam) && IsTeamValid(playerTwoRawTeam);
+    }
 
+    public void ShowInvalidTeamsError()
+    {
         _teamValidatorView.ShowInvalidTeams();
-        return false;
     }
 
     private bool IsTeamValid(List<TeamUnitRaw> teamUnits) =>

@@ -29,7 +29,11 @@ public class Game
 
     public void Play()
     {
-        if (!_teamValidator.AreRawTeamsValid(_playerOneRawTeam, _playerTwoRawTeam)) return;
+        if (!_teamValidator.AreRawTeamsValid(_playerOneRawTeam, _playerTwoRawTeam))
+        {
+            _teamValidator.ShowInvalidTeamsError();
+            return;
+        }
         _battleManager.StartBattle();
     }
 }
