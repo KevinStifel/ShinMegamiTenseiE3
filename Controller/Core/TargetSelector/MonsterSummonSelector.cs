@@ -44,7 +44,8 @@ public sealed class MonsterSummonSelector : TargetSelectorBase
     private void PrepareSummonInformation(int currentPlayerId, UnitBase monsterToSummon, UnitBase activeUnit)
     {
         string summonerPosition = GetSummonerBoardPosition(currentPlayerId, activeUnit);
-        Board.PrepareSummonData(currentPlayerId, monsterToSummon, summonerPosition, activeUnit);
+        var summonSlot = (Position: summonerPosition, Replaced: (UnitBase?)activeUnit);
+        Board.PrepareSummonData(currentPlayerId, monsterToSummon, summonSlot);
     }
 
     private string GetSummonerBoardPosition(int currentPlayerId, UnitBase activeUnit)

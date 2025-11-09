@@ -12,9 +12,9 @@
             _board = board;
         }
         
-        public void PrepareSummonData(int playerId, UnitBase monster, string position, UnitBase? replaced)
+        public void PrepareSummonData(int playerId, UnitBase monster, (string Position, UnitBase? Replaced) summonSlot)
         {
-            _preparedSummons[playerId] = new PreparedSummonData(monster, position, replaced);
+            _preparedSummons[playerId] = new PreparedSummonData(monster, summonSlot.Position, summonSlot.Replaced);
         }
 
         public (string Position, UnitBase? Replaced) GetPreparedSummonData(int playerId)

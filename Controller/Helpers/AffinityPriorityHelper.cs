@@ -14,8 +14,6 @@ public static class AffinityPriorityHelper
         {
             string reaction = target.Affinity.GetAffinityReaction(elementType);
             
-            // revisar reaction y si se cumple que es neutral o resist convertirla a un miss
-            
             int priority = GetPriorityValue(reaction);
 
             if (priority < topPriority)
@@ -34,12 +32,12 @@ public static class AffinityPriorityHelper
 
         return normalized switch
         {
-            "rp" => 1, // Repel
-            "dr" => 1, // Drain
-            "nu" => 2, // Null
-            "wk" => 3, // Weak
-            "rs" => 4, // Resist
-            "-" => 5,  // Neutral / sin afinidad
+            "rp" => 1,
+            "dr" => 1,
+            "nu" => 2,
+            "wk" => 3,
+            "rs" => 4,
+            "-" => 5,
             _ => 5
         };
     }

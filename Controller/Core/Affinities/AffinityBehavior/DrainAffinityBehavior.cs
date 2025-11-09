@@ -18,6 +18,5 @@ public sealed class DrainAffinityBehavior : AffinityBehavior
     
     public override void ApplyLightDarkEffect(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        // No hay casos Drain para Light/Dark
     }
 }

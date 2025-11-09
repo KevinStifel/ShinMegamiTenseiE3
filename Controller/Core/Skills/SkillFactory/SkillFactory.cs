@@ -7,10 +7,7 @@ public static class SkillFactory
     public static Skill Create(SkillData skillData, BoardManager boardManager, View view)
     {
         string skillName = skillData.Name;
-
-        // ===========================================================
-        // PHYSICAL SKILLS
-        // ===========================================================
+        
         if (skillName == "Lunge")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -46,8 +43,6 @@ public static class SkillFactory
 
         if (skillName == "Stigma Attack")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Phys ---
         
         if (skillName == "Scratch Dance")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
@@ -57,9 +52,6 @@ public static class SkillFactory
 
         if (skillName == "Bar Toss")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
         
         if (skillName == "Critical Wave")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
@@ -79,10 +71,6 @@ public static class SkillFactory
         if (skillName == "Hades Blast")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
-
-        // ===========================================================
-        // GUN SKILLS
-        // ===========================================================
         if (skillName == "Needle Shot")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -94,14 +82,9 @@ public static class SkillFactory
 
         if (skillName == "Riot Gun")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Gun ---
         
         if (skillName == "Myriad Arrows")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
         
         if (skillName == "Rapid Needle")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
@@ -112,10 +95,6 @@ public static class SkillFactory
         if (skillName == "Heaven's Bow")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
-
-        // ===========================================================
-        // FIRE SKILLS
-        // ===========================================================
         if (skillName == "Agi")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -127,17 +106,12 @@ public static class SkillFactory
 
         if (skillName == "Trisagion")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Fire ---
         
         if (skillName == "Fire Breath")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
 
         if (skillName == "Ragnarok")
            return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
         
         if (skillName == "Maragi")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
@@ -147,11 +121,7 @@ public static class SkillFactory
 
         if (skillName == "Maragidyne")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
-        
-
-        // ===========================================================
-        // ICE SKILLS
-        // ===========================================================
+  
         if (skillName == "Bufu")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -160,8 +130,6 @@ public static class SkillFactory
 
         if (skillName == "Bufudyne")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Ice ---
         
         if (skillName == "Ice Breath")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
@@ -174,10 +142,7 @@ public static class SkillFactory
 
         if (skillName == "Refrigerate")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
-        
+   
         if (skillName == "Mabufu")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
 
@@ -187,10 +152,6 @@ public static class SkillFactory
         if (skillName == "Mabufudyne")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
-
-        // ===========================================================
-        // ELECTRIC SKILLS
-        // ===========================================================
         if (skillName == "Zio")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -199,17 +160,12 @@ public static class SkillFactory
 
         if (skillName == "Ziodyne")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Elec ---
         
         if (skillName == "Shock")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
 
         if (skillName == "Plasma Discharge")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
         
         if (skillName == "Mazio")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
@@ -223,10 +179,6 @@ public static class SkillFactory
         if (skillName == "Thunder Reign")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
-
-        // ===========================================================
-        // FORCE SKILLS
-        // ===========================================================
         if (skillName == "Zan")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
 
@@ -238,17 +190,12 @@ public static class SkillFactory
 
         if (skillName == "Deadly Wind")
             return new Skill(skillData, new DamageEffect(view), new EnemySelector(view, boardManager));
-
-        // --- Multiobjetivo: Force ---
         
         if (skillName == "Wind Breath")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
 
         if (skillName == "Floral Gust")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
-
-        // --- All ---
         
         if (skillName == "Mazan")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
@@ -259,18 +206,12 @@ public static class SkillFactory
         if (skillName == "Mazandyne")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
         
-        // ===========================================================
-        // LIGHT SKILLS
-        // ===========================================================
-
-        // --- Single ---
         if (skillName == "Hama")
             return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         if (skillName == "Hamaon")
             return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
-        // --- All ---
         if (skillName == "Mahama")
             return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
@@ -280,19 +221,12 @@ public static class SkillFactory
         if (skillName == "Judgement Light")
             return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
-
-        // ===========================================================
-        // DARK SKILLS
-        // ===========================================================
-
-        // --- Single ---
         if (skillName == "Mudo")
             return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
         if (skillName == "Mudoon")
             return new Skill(skillData, new LightDarkEffect(view), new EnemySelector(view, boardManager));
 
-        // --- All ---
         if (skillName == "Mamudo")
             return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
 
@@ -301,14 +235,6 @@ public static class SkillFactory
 
         if (skillName == "Die for Me!")
             return new Skill(skillData, new LightDarkEffect(view), new AllEnemySelector(view, boardManager));
-
-
-
-        // ===========================================================
-        // ALMIGHTY SKILLS
-        // ===========================================================
-
-        // --- Single ---
         
         if (skillName == "Life Drain")
             return new Skill(skillData, new LifeDrainEffect(view), new EnemySelector(view, boardManager));
@@ -319,15 +245,9 @@ public static class SkillFactory
         if (skillName == "Energy Drain")
             return new Skill(skillData, new EnergyDrainEffect(view), new EnemySelector(view, boardManager));
         
-
-        // --- Multi ---
-        
         if (skillName == "Desperate Hit")
             return new Skill(skillData, new DamageEffect(view), new MultiEnemySelector(view, boardManager));
-        
 
-        // --- All ---
-        
         if (skillName == "Megido")
             return new Skill(skillData, new DamageEffect(view), new AllEnemySelector(view, boardManager));
 
@@ -358,9 +278,6 @@ public static class SkillFactory
         if (skillName == "Serpent of Sheol")
             return new Skill(skillData, new LifeDrainEffect(view), new AllEnemySelector(view, boardManager));
 
-        // ===========================================================
-        // HEAL SKILLS
-        // ===========================================================
         if (skillName == "Dia")
             return new Skill(skillData, new HealEffect(view), new AllySelector(view, boardManager));
 
@@ -370,8 +287,6 @@ public static class SkillFactory
         if (skillName == "Diarahan")
             return new Skill(skillData, new HealEffect(view), new AllySelector(view, boardManager));
 
-        // --- Party (Multiobjetivo Heal) ---
-        
         if (skillName == "Media")
             return new Skill(skillData, new HealEffect(view), new PartySelector(view, boardManager));
 
@@ -383,31 +298,18 @@ public static class SkillFactory
 
         if (skillName == "Recarmdra")
             return new Skill(skillData, new MassReviveHealEffect(view), new MassReviveAllySelector(view, boardManager));
-        
-
-        // ===========================================================
-        // REVIVE SKILLS
-        // ===========================================================
+  
         if (skillName == "Recarm")
             return new Skill(skillData, new ReviveEffect(view), new DeadAllySelector(view, boardManager));
 
         if (skillName == "Samarecarm")
             return new Skill(skillData, new ReviveEffect(view), new DeadAllySelector(view, boardManager));
-
-
-        // ===========================================================
-        // INVITATION / SPECIAL
-        // ===========================================================
+        
         if (skillName == "Invitation")
             return new Skill(skillData, new InvitationEffect(view), new ReserveSelectorAll(view, boardManager));
 
         if (skillName == "Sabbatma")
             return new Skill(skillData, new SpecialEffect(view), new SpecialSelector(view, boardManager));
 
-
-        // ===========================================================
-        // DEFAULT (no implementado)
-        // ===========================================================
-        throw new NotImplementedException($"Skill '{skillData.Name}' no está implementada en SkillFactory.");
-    }
+        throw new SkillNotFoundException($"Skill '{skillData.Name}' no está implementada en SkillFactory.");    }
 }
