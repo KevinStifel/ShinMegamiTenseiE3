@@ -8,21 +8,17 @@ public sealed class NeutralAffinityView : AffinityViewBase
 
     public override void ShowAffinityReaction(UnitBase casterUnit, UnitBase targetUnit, int damage)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{targetUnit.Name} recibe {damage} de daño");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowDamageTaken(targetUnit, damage);
     }
-    
+
     public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
 
-        if (targetUnit.Stats.HP == 0)
-        {
-            View.WriteLine($"{targetUnit.Name} ha sido eliminado");
-        }
+        if (!IsTargetAlive(targetUnit))
+            ShowUnitEliminated(targetUnit);
         else
-        {
-            View.WriteLine($"{casterUnit.Name} ha fallado el ataque");
-        }
+            ShowAttackMissed(casterUnit);
     }
 }

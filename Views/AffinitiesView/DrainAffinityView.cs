@@ -8,12 +8,12 @@ public sealed class DrainAffinityView : AffinityViewBase
 
     public override void ShowAffinityReaction(UnitBase casterUnit, UnitBase targetUnit, int damage)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{targetUnit.Name} absorbe {damage} daño");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowDamageAbsorbed(targetUnit, damage);
     }
-    
+
     public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
     }
 }

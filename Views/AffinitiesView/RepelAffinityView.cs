@@ -8,18 +8,18 @@ public sealed class RepelAffinityView : AffinityViewBase
 
     public override void ShowAffinityReaction(UnitBase casterUnit, UnitBase targetUnit, int damage)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{targetUnit.Name} devuelve {damage} daño a {casterUnit.Name}");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowDamageRepelled(casterUnit, targetUnit, damage);
     }
 
     public override void ShowHp(UnitBase attackerUnit, UnitBase targetUnit)
     {
-        ShowHp(attackerUnit);
+        ShowHpStatusLine(attackerUnit);
     }
-    
+
     public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{casterUnit.Name} ha sido eliminado");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowUnitEliminated(casterUnit);
     }
 }

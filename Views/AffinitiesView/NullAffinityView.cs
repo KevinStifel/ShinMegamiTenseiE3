@@ -8,12 +8,13 @@ public sealed class NullAffinityView : AffinityViewBase
 
     public override void ShowAffinityReaction(UnitBase casterUnit, UnitBase targetUnit, int damage)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{targetUnit.Name} bloquea el ataque de {casterUnit.Name}");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowAttackBlocked(casterUnit, targetUnit);
     }
+
     public override void ShowLightDarkReaction(UnitBase casterUnit, UnitBase targetUnit, SkillData skillData)
     {
-        View.WriteLine($"{casterUnit.Name} {AttackElementalVerb} a {targetUnit.Name}");
-        View.WriteLine($"{targetUnit.Name} bloquea el ataque de {casterUnit.Name}");
+        ShowAttackAnnouncement(casterUnit, targetUnit);
+        ShowAttackBlocked(casterUnit, targetUnit);
     }
 }

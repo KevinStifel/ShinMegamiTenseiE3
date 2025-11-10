@@ -11,9 +11,9 @@ namespace Shin_Megami_Tensei
             _view = view;
         }
 
-        public CombatActionBase CreateAction(string choice)
+        public CombatActionBase CreateAction(string selectedAction)
         {
-            return choice switch
+            return selectedAction switch
             {
                 "attack" => new PhysicalAttackAction(_view),
                 "shoot"  => new GunAttackAction(_view),
