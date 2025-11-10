@@ -2,7 +2,7 @@
 
 public class TurnManager
 {
-    private Turn _currentTurn = new(0, 0, new List<UnitBase>());
+    private readonly Turn _currentTurn = new(0, 0, new List<UnitBase>());
 
     public int FullTurns => _currentTurn.FullTurns;
     public int BlinkingTurns => _currentTurn.BlinkingTurns;
@@ -27,14 +27,6 @@ public class TurnManager
     public UnitBase GetAttackerOnTurn()
         => _currentTurn.AttackOrder[0];
 
-    private void RotateAttackOrder()
-    {
-        if (_currentTurn.AttackOrder.Count == 0) return;
-        var first = _currentTurn.AttackOrder[0];
-        _currentTurn.AttackOrder.RemoveAt(0);
-        _currentTurn.AttackOrder.Add(first);
-    }
-
     public void ApplyTurnChange(TurnChange change)
     {
         _currentTurn.FullTurns     = CombatMath.ClampAtLeast(_currentTurn.FullTurns - change.ConsumedFull, 0);
@@ -42,7 +34,15 @@ public class TurnManager
         _currentTurn.BlinkingTurns += change.GainedBlinking;
         RotateAttackOrder();
     }
-
+    
+    private void RotateAttackOrder()
+    {
+        if (_currentTurn.AttackOrder.Count == 0) return;
+        var first = _currentTurn.AttackOrder[0];
+        _currentTurn.AttackOrder.RemoveAt(0);
+        _currentTurn.AttackOrder.Add(first);
+    }
+    
     public void UpdateOrder(UnitBase summoner, UnitBase summoned, UnitBase? replaced)
     {
         var order = _currentTurn.AttackOrder;
@@ -106,6 +106,7 @@ public class TurnManager
         ApplyTurnChange(change);
         return change;
     }
+    
     public void SyncWithBoard(BoardManager boardManager, int playerId)
     {
         var aliveUnits = boardManager.GetAliveUnits(playerId);
@@ -114,5 +115,4 @@ public class TurnManager
             .Where(unit => aliveUnits.Contains(unit))
             .ToList();
     }
-
 }

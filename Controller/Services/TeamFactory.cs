@@ -8,6 +8,20 @@ public class TeamFactory
     {
         _repository = repository;
     }
+    
+    public List<UnitBase> BuildTeam(List<TeamUnitRaw> rawTeam)
+    {
+        var assembledTeamUnits = new List<UnitBase>();
+
+        foreach (var rawUnit in rawTeam)
+        {
+            if (rawUnit.IsSamurai)
+                assembledTeamUnits.Add(BuildSamurai(rawUnit));
+            else
+                assembledTeamUnits.Add(BuildMonster(rawUnit));
+        }
+        return assembledTeamUnits;
+    }
 
     private Samurai BuildSamurai(TeamUnitRaw rawUnit)
     {
@@ -35,20 +49,7 @@ public class TeamFactory
             skills
         );
     }
-    public List<UnitBase> BuildTeam(List<TeamUnitRaw> rawTeam)
-    {
-        var assembledTeamUnits = new List<UnitBase>();
-
-        foreach (var rawUnit in rawTeam)
-        {
-            if (rawUnit.IsSamurai)
-                assembledTeamUnits.Add(BuildSamurai(rawUnit));
-            else
-                assembledTeamUnits.Add(BuildMonster(rawUnit));
-        }
-        return assembledTeamUnits;
-    }
-
+    
     private Stats MapStats(StatsJsonDto dtoStats)
     {
         return new Stats(

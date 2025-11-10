@@ -6,8 +6,6 @@ namespace Shin_Megami_Tensei;
 
 public sealed class UseSkillAction : CombatActionBase
 {
-    private const string PassiveSkillType = "Passive";
-
     public UseSkillAction(View view) : base(view) { }
 
     public override void ExecuteAction(

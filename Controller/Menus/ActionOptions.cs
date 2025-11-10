@@ -2,7 +2,6 @@
 {
     public sealed class ActionOptions
     {
-        public IReadOnlyDictionary<string, string> Map { get; }
 
         public ActionOptions(IReadOnlyDictionary<string, string> actionMap)
         {
@@ -10,5 +9,7 @@
         }
 
         public string GetSelectedOption(string menuSelection) => Map[menuSelection.Trim()];
+        
+        private IReadOnlyDictionary<string, string> Map { get; }
     }
 }
