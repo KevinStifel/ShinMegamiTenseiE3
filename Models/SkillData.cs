@@ -6,11 +6,9 @@ public class SkillData
     public string Type { get; }
     public int Cost { get; }
     public int Power { get; }
-    public string Target { get; }
+    private string Target { get; }
     public string Hits { get; }
-    public string Effect { get; }
-    
-    public bool PayBeforeEffect { get; init; } = false;
+    private string Effect { get; }
     
     public SkillData(string name, string type, int cost, int power, string target, string hits, string effect)
     {

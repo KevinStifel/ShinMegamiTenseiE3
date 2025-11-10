@@ -29,10 +29,7 @@ public class Stats
         Spd = spd;
         Lck = lck;
     }
-
-    public bool HasEnoughMP(int cost)
-        => MP >= cost;
-
+    
     public void UseMP(int cost)
         => MP = CombatMath.ClampAtLeast(MP - cost, 0);
 
