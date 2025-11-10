@@ -49,10 +49,10 @@ public sealed class SpecialEffect : EffectBase
 
     private UnitBase GetMonsterToSummon(List<UnitBase> targets) => targets.First();
 
-    private void PerformSummon(UnitBase monsterToSummon, PlayerBoardFormation formation, SummonPlacement placement)
+    private void PerformSummon(UnitBase monsterToSummon, PlayerBoardFormation playerFormation, SummonPlacement placement)
     {
         var summonEffect = new SummonEffect(View);
-        summonEffect.ApplySamuraiSummon(monsterToSummon, formation, placement);
+        summonEffect.ApplySamuraiSummon(monsterToSummon, playerFormation, placement);
     }
 
     private void UpdateTurnOrder(

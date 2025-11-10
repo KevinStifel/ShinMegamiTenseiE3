@@ -6,11 +6,6 @@ namespace Shin_Megami_Tensei;
 public sealed class DamageEffect : EffectBase
 {
     private AffinityElement _elementType;
-    private new TurnManager _turnManager = null!;
-    private new BoardManager _boardManager = null!;
-    private new SkillData _skillData = null!;
-    private new int _currentPlayerId;
-    private new int _enemyPlayerId;
 
     public DamageEffect(View view) : base(view) { }
 
@@ -20,6 +15,7 @@ public sealed class DamageEffect : EffectBase
         SkillExecutionContext skillExecutionContext)
     {
         InitializeEffect(skillExecutionContext);
+        _elementType = AffinityMapper.Parse(SkillData.Type);
 
         string topPriorityReaction =
             AffinityPriorityHelper.GetTopPriorityReaction(targetEnemyUnits, _elementType);
@@ -30,17 +26,7 @@ public sealed class DamageEffect : EffectBase
         
         var topAffinityBehavior = AffinityBehaviorFactory.Create(topPriorityReaction);
         ApplyTurnChange(topAffinityBehavior);
-        casterUnit.Stats.UseMP(_skillData.Cost);
-    }
-
-    protected override void InitializeEffect(SkillExecutionContext context)
-    {
-        _turnManager = context.TurnManager;
-        _boardManager = context.BoardManager;
-        _skillData = context.SkillData;
-        _currentPlayerId = context.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
-        _elementType = AffinityMapper.Parse(_skillData.Type);
+        casterUnit.Stats.UseMP(SkillData.Cost);
     }
 
     private void ProcessDamageHits(
@@ -108,7 +94,7 @@ public sealed class DamageEffect : EffectBase
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
         
         int inflictedDamage = DamageCalculator.CalculateFinalDamageForSkill(
-            casterUnit, _skillData, affinityBehavior);
+            casterUnit, SkillData, affinityBehavior);
 
         affinityBehavior.ApplyEffect(casterUnit, targetUnit, inflictedDamage);
         affinityView.ShowAffinityReaction(casterUnit, targetUnit, inflictedDamage);
@@ -128,19 +114,19 @@ public sealed class DamageEffect : EffectBase
 
     private void ApplyTurnChange(AffinityBehavior affinityBehavior)
     {
-        var turnChange = _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
+        var turnChange = TurnManager.ApplyAffinityTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
 
     private void HandleDeaths(UnitBase casterUnit, UnitBase targetUnit)
     {
-        HandleDeath(_enemyPlayerId, targetUnit);
-        HandleDeath(_currentPlayerId, casterUnit);
+        HandleDeath(EnemyPlayerId, targetUnit);
+        HandleDeath(CurrentPlayerId, casterUnit);
     }
 
     private void HandleDeath(int playerId, UnitBase unit)
     {
         if (unit.Stats.HP == 0)
-            _boardManager.HandleUnitDeath(playerId, unit);
+            BoardManager.HandleUnitDeath(playerId, unit);
     }
 }

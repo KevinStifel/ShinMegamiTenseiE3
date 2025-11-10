@@ -14,8 +14,8 @@ public sealed class LightDarkEffect : EffectBase
         List<UnitBase> targets, 
         SkillExecutionContext context)
     {
-        base.InitializeEffect(context);
-        _elementType = AffinityMapper.Parse(_skillData.Type);
+        InitializeEffect(context);
+        _elementType = AffinityMapper.Parse(SkillData.Type);
         
         foreach (var target in targets)
             ApplyLightDarkToTarget(casterUnit, target);
@@ -29,9 +29,9 @@ public sealed class LightDarkEffect : EffectBase
         var affinityBehavior = GetAffinityBehavior(target, _elementType);
         var affinityView = AffinityViewFactory.Create(affinityBehavior.Type, View, _elementType);
         
-        affinityBehavior.ApplyLightDarkEffect(caster, target, _skillData);
+        affinityBehavior.ApplyLightDarkEffect(caster, target, SkillData);
         
-        affinityView.ShowLightDarkReaction(caster, target, _skillData);
+        affinityView.ShowLightDarkReaction(caster, target, SkillData);
         EffectView.ShowHpStatus(target);
 
         HandleDeath(target);
@@ -42,7 +42,7 @@ public sealed class LightDarkEffect : EffectBase
         bool isTargetDead = target.Stats.HP == 0;
         if (isTargetDead)
         {
-            _boardManager.HandleUnitDeath(_enemyPlayerId, target);
+            BoardManager.HandleUnitDeath(EnemyPlayerId, target);
         }
     }
 
@@ -51,7 +51,7 @@ public sealed class LightDarkEffect : EffectBase
         var topAffinity = AffinityPriorityHelper.GetTopPriorityReaction(targets, _elementType);
         var topBehavior = AffinityBehaviorFactory.Create(topAffinity);
         
-        var turnChange = _turnManager.ApplyAffinityTurnEffect(topBehavior);
+        var turnChange = TurnManager.ApplyAffinityTurnEffect(topBehavior);
         ActionView.ShowTurnConsumption(turnChange);
     }
 }

@@ -11,7 +11,7 @@ public sealed class InvitationEffect : EffectBase
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
     {
-        base.InitializeEffect(skillExecutionContext);
+        InitializeEffect(skillExecutionContext);
         
         var monsterToSummon = targets[0];
         var (replacedUnit, summonPosition) = PerformBoardUpdate(monsterToSummon);
@@ -25,9 +25,9 @@ public sealed class InvitationEffect : EffectBase
 
     private (UnitBase? ReplacedUnit, string Position) PerformBoardUpdate(UnitBase monsterToSummon)
     {
-        var (summonPosition, replacedUnit) = _boardManager.GetPreparedSummonData(_currentPlayerId);
-        var playerBoard = _boardManager.SelectMutableBoard(_currentPlayerId);
-        var reserveUnits = _boardManager.GetReserveUnitsForPlayer(_currentPlayerId);
+        var (summonPosition, replacedUnit) = BoardManager.GetPreparedSummonData(CurrentPlayerId);
+        var playerBoard = BoardManager.SelectMutableBoard(CurrentPlayerId);
+        var reserveUnits = BoardManager.GetReserveUnitsForPlayer(CurrentPlayerId);
 
         PlaceMonsterOnBoard(playerBoard, summonPosition, monsterToSummon);
         UpdateReserveList(reserveUnits, monsterToSummon, replacedUnit);
@@ -77,6 +77,6 @@ public sealed class InvitationEffect : EffectBase
         UnitBase monsterToSummon, 
         UnitBase? replacedUnit)
     {
-        _turnManager.UpdateOrder(casterUnit, monsterToSummon, replacedUnit);
+        TurnManager.UpdateOrder(casterUnit, monsterToSummon, replacedUnit);
     }
 }

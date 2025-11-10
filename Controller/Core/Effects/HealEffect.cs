@@ -11,10 +11,10 @@ public sealed class HealEffect : EffectBase
         List<UnitBase> targets,
         SkillExecutionContext skillExecutionContext)
     { 
-        base.InitializeEffect(skillExecutionContext);
+        InitializeEffect(skillExecutionContext);
         
         EffectView.ShowSeparator();
-        ApplyHealToTargets(casterUnit, targets, _skillData);
+        ApplyHealToTargets(casterUnit, targets, SkillData);
         
         ApplyTurnCost();
         ApplyMpCost(casterUnit);

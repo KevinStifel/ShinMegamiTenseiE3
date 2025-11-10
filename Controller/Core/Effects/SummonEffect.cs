@@ -10,15 +10,15 @@ public sealed class SummonEffect : EffectBase
 
     public UnitBase? ApplySamuraiSummon(
         UnitBase monsterToSummon, 
-        PlayerBoardFormation playerFormation, 
+        PlayerBoardFormation formation, 
         SummonPlacement summonPlacement)
     {
-        playerFormation.ActiveBoard[summonPlacement.BoardPosition] = monsterToSummon;
-        playerFormation.ReserveUnits.Remove(monsterToSummon);
+        formation.ActiveBoard[summonPlacement.BoardPosition] = monsterToSummon;
+        formation.ReserveUnits.Remove(monsterToSummon);
 
         bool hasReplacedUnit = summonPlacement.ReplacedUnit != null;
         if (hasReplacedUnit)
-            playerFormation.ReserveUnits.Insert(0, summonPlacement.ReplacedUnit!);
+            formation.ReserveUnits.Insert(0, summonPlacement.ReplacedUnit!);
 
         EffectView.ShowSummonResult(monsterToSummon);
         return summonPlacement.ReplacedUnit;

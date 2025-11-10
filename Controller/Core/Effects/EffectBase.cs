@@ -9,11 +9,11 @@ public abstract class EffectBase
     protected readonly CombatActionView ActionView;
     protected readonly View View;
 
-    protected BoardManager _boardManager = null!;
-    protected TurnManager _turnManager = null!;
-    protected SkillData _skillData = null!;
-    protected int _currentPlayerId;
-    protected int _enemyPlayerId;
+    protected BoardManager BoardManager = null!;
+    protected TurnManager TurnManager = null!;
+    protected SkillData SkillData = null!;
+    protected int CurrentPlayerId;
+    protected int EnemyPlayerId;
 
     protected EffectBase(View view)
     {
@@ -29,21 +29,21 @@ public abstract class EffectBase
 
     protected virtual void InitializeEffect(SkillExecutionContext context)
     {
-        _boardManager = context.BoardManager;
-        _turnManager = context.TurnManager;
-        _skillData = context.SkillData;
-        _currentPlayerId = context.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
+        BoardManager    = context.BoardManager!;
+        TurnManager     = context.TurnManager!;
+        SkillData       = context.SkillData!;
+        CurrentPlayerId = context.CurrentPlayerId;
+        EnemyPlayerId   = BattleHelper.GetEnemyPlayerId(CurrentPlayerId);
     }
 
     protected void ApplyTurnCost()
     {
-        ApplyNeutralTurnChange(_turnManager);
+        ApplyNeutralTurnChange(TurnManager);
     }
 
     protected void ApplyMpCost(UnitBase casterUnit)
     {
-        casterUnit.Stats.UseMP(_skillData.Cost);
+        casterUnit.Stats.UseMP(SkillData.Cost);
     }
 
     protected void ApplyNeutralTurnChange(TurnManager turnManager)

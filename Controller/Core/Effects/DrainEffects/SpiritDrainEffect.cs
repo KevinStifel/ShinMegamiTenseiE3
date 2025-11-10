@@ -5,11 +5,6 @@ namespace Shin_Megami_Tensei;
 
 public sealed class SpiritDrainEffect : EffectBase
 {
-    private TurnManager _turnManager = null!;
-    private BoardManager _boardManager = null!;
-    private SkillData _skillData = null!;
-    private int _currentPlayerId;
-    private int _enemyPlayerId;
     private readonly AffinityElement _elementType = AffinityElement.Almighty;
 
     public SpiritDrainEffect(View view) : base(view) { }
@@ -20,28 +15,20 @@ public sealed class SpiritDrainEffect : EffectBase
         SkillExecutionContext context)
     {
         InitializeEffect(context);
+
         var affinityBehavior = GetAffinityBehavior(caster, _elementType);
-        caster.Stats.UseMP(_skillData.Cost);
+        caster.Stats.UseMP(SkillData.Cost);
 
         foreach (var target in targets)
             ApplyMpDrain(caster, target);
 
-        var turnChange = ApplyTurnEffect(affinityBehavior);
+        var turnChange = TurnManager.ApplyAffinityTurnEffect(affinityBehavior);
         ActionView.ShowTurnConsumption(turnChange);
-    }
-
-    protected override void InitializeEffect(SkillExecutionContext context)
-    {
-        _turnManager = context.TurnManager;
-        _boardManager = context.BoardManager;
-        _skillData = context.SkillData;
-        _currentPlayerId = context.CurrentPlayerId;
-        _enemyPlayerId = BattleHelper.GetEnemyPlayerId(_currentPlayerId);
     }
 
     private void ApplyMpDrain(UnitBase caster, UnitBase target)
     {
-        int actualDrain = DrainCalculator.CalculateSpiritDrain(caster, target, _skillData);
+        int actualDrain = DrainCalculator.CalculateSpiritDrain(caster, target, SkillData);
 
         ApplyDrainToStats(caster, target, actualDrain);
         EffectView.ShowMpDrainEffect(caster, target, actualDrain);
@@ -51,10 +38,5 @@ public sealed class SpiritDrainEffect : EffectBase
     {
         target.Stats.UseMP(actualDrain);
         caster.Stats.RestoreMP(actualDrain);
-    }
-            
-    private TurnChange ApplyTurnEffect(AffinityBehavior affinityBehavior)
-    {
-        return _turnManager.ApplyAffinityTurnEffect(affinityBehavior);
     }
 }
